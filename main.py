@@ -34,16 +34,16 @@ while running:
             print("Fermeture du jeu")
 
         #Detecter si un joueur lâche une touche du clavier
-        elif event.type == pygame.KEYDOWN:
+        #elif event.type == pygame.KEYDOWN:
             # quelle touche a été utilisé
             #if event.key == pygame.K_LEFT: #Marche pas encore mais désigne le clique de la souris
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    #screen.fill(couleur_fond)
-                    pygame.draw.circle(screen, couleur_rond, event.pos, 2)
-                    pygame.display.flip()
-                    print(event.pos) #Coordonnées du clique
-                    print("Découpe enclenchée")
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                #screen.fill(couleur_fond)
+                pygame.draw.circle(screen, couleur_rond, event.pos, 2)
+                pygame.display.flip()
+                print(event.pos) #Coordonnées du clique
+                print("Découpe enclenchée")
                 #print(event.button)  # numéro du bouton
                 #if event.type == pygame.MOUSEMOTION:
                    #pygame.draw.circle(pygame.display.set.mode((800,600)), (0,0,0), event.pos, 40) #Trace un rond à la position de la souris
