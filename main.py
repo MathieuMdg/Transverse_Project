@@ -38,7 +38,9 @@ while running:
         elif event.type == pygame.KEYDOWN:
 
             if event.key == pygame.K_ESCAPE:
+                running = False
                 pygame.quit()
+                print("Fermeture du jeu")
 
             if event.key == pygame.K_RIGHT:
                 print("yes")
