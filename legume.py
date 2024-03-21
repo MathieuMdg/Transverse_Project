@@ -8,7 +8,9 @@ T = 0
 angle = random.uniform(-math.pi / 4, -3 * math.pi / 4)
 
 vitesse = random.randint(30, 50)
-
+listeLegume = ["legume_1", "legume_2", "legume_3", "legume_4", "legume_5", "legume_6"]
+width, height = 1920, 1080
+x0 = random.randint(0, width)
 
 # Création d'une classe représentant les fruits
 class Legume(pygame.sprite.Sprite):
@@ -19,23 +21,23 @@ class Legume(pygame.sprite.Sprite):
         legume_choisi = random.randint(1, 6)
         self.image = pygame.image.load("assets/legume_" + str(legume_choisi) + ".png") #attribue l'image des légumes
         self.rect = self.image.get_rect() #Récupérer les coordonnées des légumes
-        self.rect.x = 250
-        self.rect.y = 250
+        self.rect.x = x0
+        self.rect.y = height
         self.image = pygame.transform.scale(self.image, (60, 60))
         self.throw = False
 
 
     def throw_t_f(self):
-        if random.random() >= 0.9:
+        if random.random() >= 0:
             self.throw = True
         else:
             self.throw = False
 
     def move_trajectory(self):
         global T
-        self.rect.y = 1/2 * G * T * T + vitesse * math.sin(angle) * T + 250
+        self.rect.y = 1/2 * G * T * T + vitesse * math.sin(angle) * T + height
         print()
-        self.rect.x = vitesse * math.cos(angle) * T + 250
+        self.rect.x = vitesse * math.cos(angle) * T + x0
         print(math.cos(angle))
         print("angle ", angle)
         print(" vitesse ", vitesse)

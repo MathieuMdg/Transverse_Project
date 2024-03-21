@@ -1,5 +1,4 @@
 import time
-
 import pygame
 from game import Game
 pygame.init()
@@ -9,12 +8,13 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Légume Samourai")
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-couleur_rond = (255,255,255)
+couleur_rond = (255, 255, 255)
 width, height = screen.get_size()
 
 background = pygame.image.load('background/background_1.jpeg')
-stretchedbg = pygame.transform.scale(background,(width, height))
+stretchedbg = pygame.transform.smoothscale(background,(width, height))
 
+gameisnotover = True
 running = True
 # Charger le jeu
 game = Game()
@@ -42,19 +42,6 @@ while running:
                 pygame.quit()
                 print("Fermeture du jeu")
 
-            if game.legume.throw == True:
-                print("yes")
-                print(game.legume.rect.y)
-                while (game.legume.rect.y < 598):
-                    game.legume.move_trajectory()
-                    screen.blit(stretchedbg, (0, 0))
-                    screen.blit(game.legume.image, game.legume.rect)
-                    pygame.display.flip()
-                    time.sleep(0.05)
-                screen.blit(stretchedbg, (0, 0))
-                screen.blit(game.legume.image, game.legume.rect)
-                pygame.display.flip()
-
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 #screen.fill(couleur_fond)
@@ -64,3 +51,16 @@ while running:
                 print("Découpe enclenchée")
                 #print(event.button)  # numéro du bouton
                 #if event.type == pygame.MOUSEMOTION:
+    """while gameisnotover:
+        game.legume.throw_t_f()
+        if game.legume.throw:
+            print("yes")
+            print(game.legume.rect.y)
+            while 0 <= game.legume.rect.y <= height:
+                game.legume.move_trajectory()
+                screen.blit(stretchedbg, (0, 0))
+                screen.blit(game.legume.image, game.legume.rect)
+                pygame.display.flip()
+                time.sleep(0.05) """
+
+
