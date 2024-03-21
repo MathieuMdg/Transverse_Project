@@ -5,8 +5,9 @@ import random
 
 G = 9.80665 #constante de gravitation
 T = 0
-angle = random.uniform(-math.pi, -math.pi / 2)
-vitesse = random.randint(100, 150)
+angle = random.uniform(-math.pi / 4, -3 * math.pi / 4)
+
+vitesse = random.randint(30, 50)
 
 
 # Création d'une classe représentant les fruits
