@@ -34,8 +34,10 @@ class Legume(pygame.sprite.Sprite):
     def throw_t_f(self):
         if random.random() >= 0.9:
             self.throw = True
+            return True
         else:
             self.throw = False
+            return False
 
     def move_trajectory(self, T, angle, vitesse):
         self.rect.y = 1/2 * G * T * T + vitesse * math.sin(angle) * T + height

@@ -30,12 +30,35 @@ while running:
     screen.blit(game.legume.image, game.legume.rect)
     # Mettre à jour l'écran
     pygame.display.flip()
+
+    game.legume.throw_t_f()
+    print(game.legume.throw_t_f())
+
+    if game.legume.throw:
+        print("start")
+        angle = random.uniform(-math.pi / 3, -2 * math.pi / 3)
+        vitesse = random.randint(120, 150)
+        T = 0
+
+        while game.legume.rect.y < height:
+            game.legume.move_trajectory(T, angle, vitesse)
+            screen.blit(stretchedbg, (0, 0))
+            screen.blit(game.legume.image, game.legume.rect)
+            pygame.display.flip()
+            T = T + 1
+            time.sleep(0.05)
+        print("finish")
+        game.legume.restart()
+        game.legume.throw = False
+
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
             print("Fermeture du jeu")
+
+
 
         # Detecter si un joueur lâche une touche du clavier
         elif event.type == pygame.KEYDOWN:
