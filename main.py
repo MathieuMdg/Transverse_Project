@@ -14,6 +14,42 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 couleur_rond = (255, 255, 255)
 width, height = screen.get_size()
 
+menu_background = pygame.image.load('menu_assets/legume_samourai - menu.jpg')
+menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
+screen.blit(menu_stretchedbg, (0, 0))
+game = Game()
+screen.blit(game.start_button.image,  game.start_button.rect)
+pygame.display.flip()
+
+start = False
+
+while start != True:
+
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+
+            running = False
+            pygame.quit()
+            print("Fermeture du jeu")
+
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+
+                running = False
+                pygame.quit()
+                print("Fermeture du jeu")
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+
+            if event.button == 1:
+
+                if game.start_button.rect.collidepoint(event.pos):
+
+                    start = True
+
+time.sleep(0.5)
+
 background = pygame.image.load('background/background_1.jpeg')
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
 
@@ -32,7 +68,6 @@ while running:
     pygame.display.flip()
 
     game.legume.throw_t_f()
-    print(game.legume.throw_t_f())
 
     if game.legume.throw:
         print("start")
@@ -53,6 +88,7 @@ while running:
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():
+
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()

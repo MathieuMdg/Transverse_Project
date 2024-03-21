@@ -12,7 +12,6 @@ G = 9.80665 #constante de gravitation
 
 noms_legumes = os.listdir("assets") #Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
 
-
 # Création d'une classe représentant les legumes
 class Legume(pygame.sprite.Sprite):
 
