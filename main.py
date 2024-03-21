@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 couleur_rond = (255,255,255)
 width, height = screen.get_size()
 
-background = pygame.image.load('background/fruit ninja.jpg')
+background = pygame.image.load('background/background_1.jpeg')
 stretchedbg = pygame.transform.scale(background,(width, height))
 
 running = True
@@ -45,7 +45,7 @@ while running:
                 print(game.legume.rect.y)
                 while (game.legume.rect.y < 598):
                     game.legume.move_trajectory()
-                    screen.blit(background, (0, 0))
+                    screen.blit(stretchedbg, (0, 0))
                     screen.blit(game.legume.image, game.legume.rect)
                     pygame.display.flip()
                     time.sleep(0.05)
