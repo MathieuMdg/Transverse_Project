@@ -3,10 +3,15 @@ import math
 import os
 import random
 
+
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+width, height = screen.get_size()
+height -= 40
+
 G = 9.80665 #constante de gravitation
 T = 0
-angle = random.uniform(-math.pi / 4, -3 * math.pi / 4)
-vitesse = random.randint(30, 50)
+angle = random.uniform(-math.pi / 3, -2 * math.pi / 3)
+vitesse = random.randint(120, 150)
 
 noms_legumes = os.listdir("assets") #Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
 
@@ -17,12 +22,11 @@ class Legume(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() #fais des légumes un sprite sur le jeu
         self.velocity = 10 #vitesse des légumes
-        legume_choisi = random.randint(1, 6)
         self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes))) #attribue l'image des légumes
         self.rect = self.image.get_rect() #Récupérer les coordonnées des légumes
-        self.rect.x = 250
-        self.rect.y = 250
-        self.image = pygame.transform.scale(self.image, (60, 60))
+        self.rect.x = width / 2
+        self.rect.y = height
+        self.image = pygame.transform.scale(self.image, (100, 100))
         self.throw = False
 
 
@@ -34,12 +38,9 @@ class Legume(pygame.sprite.Sprite):
 
     def move_trajectory(self):
         global T
-        self.rect.y = 1/2 * G * T * T + vitesse * math.sin(angle) * T + 250
+        self.rect.y = 1/2 * G * T * T + vitesse * math.sin(angle) * T + height
         print()
-        self.rect.x = vitesse * math.cos(angle) * T + 250
-        print(math.cos(angle))
-        print("angle ", angle)
-        print(" vitesse ", vitesse)
+        self.rect.x = vitesse * math.cos(angle) * T + width / 2
         print(self.rect.y)
         print(self.rect.x)
         T = T + 1

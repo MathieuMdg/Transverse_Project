@@ -1,4 +1,3 @@
-import pygame
 from legume import Legume
 
 # Création d'une classe qui va représenter le jeu
