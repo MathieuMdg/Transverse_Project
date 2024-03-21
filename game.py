@@ -6,4 +6,4 @@ class Game:
 
     def __init__(self):
         # Générer les légumes
-        self.pasteque = Legume()
+        self.legume = Legume()
