@@ -1,3 +1,5 @@
+import time
+
 import pygame
 from game import Game
 pygame.init()
@@ -34,7 +36,14 @@ while running:
         elif event.type == pygame.KEYDOWN:
 
             if event.key == pygame.K_RIGHT:
-                game.pasteque.move_trajectory()
+                print("yes")
+                print(game.pasteque.rect.y)
+                while (game.pasteque.rect.y < 598):
+                    game.pasteque.move_trajectory()
+                    screen.blit(background, (0, 0))
+                    screen.blit(game.pasteque.image, game.pasteque.rect)
+                    pygame.display.flip()
+                    time.sleep(0.05)
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
