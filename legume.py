@@ -1,23 +1,24 @@
 import pygame
 import math
-import time
+import os
 import random
 
 G = 9.80665 #constante de gravitation
 T = 0
 angle = random.uniform(-math.pi / 4, -3 * math.pi / 4)
-
 vitesse = random.randint(30, 50)
 
+noms_legumes = os.listdir("assets") #Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
 
-# Création d'une classe représentant les fruits
+
+# Création d'une classe représentant les legumes
 class Legume(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__() #fais des légumes un sprite sur le jeu
         self.velocity = 10 #vitesse des légumes
         legume_choisi = random.randint(1, 6)
-        self.image = pygame.image.load("assets/legume_" + str(legume_choisi) + ".png") #attribue l'image des légumes
+        self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes))) #attribue l'image des légumes
         self.rect = self.image.get_rect() #Récupérer les coordonnées des légumes
         self.rect.x = 250
         self.rect.y = 250

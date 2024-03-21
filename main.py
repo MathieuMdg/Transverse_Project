@@ -1,9 +1,9 @@
 import time
-
+import os
 import pygame
 from game import Game
-pygame.init()
 
+pygame.init()
 fps = 20
 clock = pygame.time.Clock()
 
@@ -13,7 +13,7 @@ couleur_rond = (255,255,255)
 width, height = screen.get_size()
 
 background = pygame.image.load('background/background_1.jpeg')
-stretchedbg = pygame.transform.scale(background,(width, height))
+stretchedbg = pygame.transform.smoothscale(background,(width, height))
 
 running = True
 # Charger le jeu
