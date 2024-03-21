@@ -1,6 +1,8 @@
 from game import Game
 import time
 import pygame
+import random
+import math
 
 
 pygame.init()
@@ -45,12 +47,20 @@ while running:
 
             if event.key == pygame.K_RIGHT:
 
+                print("start")
+                angle = random.uniform(-math.pi / 3, -2 * math.pi / 3)
+                vitesse = random.randint(120, 150)
+                T = 0
+
                 while game.legume.rect.y < height:
-                    game.legume.move_trajectory()
+                    game.legume.move_trajectory(T, angle, vitesse)
                     screen.blit(stretchedbg, (0, 0))
                     screen.blit(game.legume.image, game.legume.rect)
                     pygame.display.flip()
+                    T = T + 1
                     time.sleep(0.05)
+                print("finish")
+                game.legume.restart()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
