@@ -7,11 +7,13 @@ pygame.init()
 fps = 20
 clock = pygame.time.Clock()
 
-pygame.display.set_caption("Fruit Ninja")
-screen = pygame.display.set_mode((1000, 600))
+pygame.display.set_caption("Légume Samourai")
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 couleur_rond = (255,255,255)
+width, height = screen.get_size()
 
-background = pygame.image.load('assets/fruit ninja.jpg')
+background = pygame.image.load('background/fruit ninja.jpg')
+stretchedbg = pygame.transform.scale(background,(width, height))
 
 running = True
 # Charger le jeu
@@ -20,7 +22,7 @@ game = Game()
 while running:
     clock.tick(fps)
     # Appliquer l'arrière plan de notre jeu
-    screen.blit(background, (0, 0)) # Pour repositionner le fond d'écran changer les nombres
+    screen.blit(stretchedbg, (0, 0)) # Pour repositionner le fond d'écran changer les nombres
 
     # Appliquer l'image du fruit
     screen.blit(game.pasteque.image, game.pasteque.rect)
@@ -34,6 +36,9 @@ while running:
             print("Fermeture du jeu")
         #Detecter si un joueur lâche une touche du clavier
         elif event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
 
             if event.key == pygame.K_RIGHT:
                 print("yes")
