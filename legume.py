@@ -20,6 +20,7 @@ class Legume(pygame.sprite.Sprite):
         self.rect = self.image.get_rect() #Récupérer les coordonnées des légumes
         self.rect.x = 250
         self.rect.y = 250
+        self.image = pygame.transform.scale(self.image, (60, 60))
 
     def move_trajectory(self):
         global T
