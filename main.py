@@ -11,7 +11,7 @@ pygame.display.set_caption("Legume Ninja")
 screen = pygame.display.set_mode((1000, 600))
 couleur_rond = (255,255,255)
 
-background = pygame.image.load('background/fruit ninja.jpg')
+background = pygame.image.load('background/Background_1.jpeg')
 
 running = True
 # Charger le jeu
