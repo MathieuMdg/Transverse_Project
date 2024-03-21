@@ -10,7 +10,7 @@ vitesse = random.randint(100, 150)
 
 
 # Création d'une classe représentant les fruits
-class Fruit(pygame.sprite.Sprite):
+class Legume(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__() #fais de la pasteque un sprite sur le jeu
