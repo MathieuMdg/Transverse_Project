@@ -7,7 +7,7 @@ pygame.init()
 fps = 20
 clock = pygame.time.Clock()
 
-pygame.display.set_caption("Fruit Ninja")
+pygame.display.set_caption("Legume Ninja")
 screen = pygame.display.set_mode((1000, 600))
 couleur_rond = (255,255,255)
 
