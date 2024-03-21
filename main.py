@@ -28,7 +28,7 @@ while running:
     screen.blit(game.legume.image, game.legume.rect)
     # Mettre à jour l'écran
     pygame.display.flip()
-    # Si le joueur ferme la fenêtre (ou clique sur le bouton cliquer [plus tard])
+    # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -42,7 +42,7 @@ while running:
                 pygame.quit()
                 print("Fermeture du jeu")
 
-            if event.key == pygame.K_RIGHT:
+            if game.legume.throw == True:
                 print("yes")
                 print(game.legume.rect.y)
                 while (game.legume.rect.y < 598):
@@ -51,6 +51,9 @@ while running:
                     screen.blit(game.legume.image, game.legume.rect)
                     pygame.display.flip()
                     time.sleep(0.05)
+                screen.blit(stretchedbg, (0, 0))
+                screen.blit(game.legume.image, game.legume.rect)
+                pygame.display.flip()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:

@@ -22,6 +22,14 @@ class Legume(pygame.sprite.Sprite):
         self.rect.x = 250
         self.rect.y = 250
         self.image = pygame.transform.scale(self.image, (60, 60))
+        self.throw = False
+
+
+    def throw_t_f(self):
+        if random.random() >= 0.9:
+            self.throw = True
+        else:
+            self.throw = False
 
     def move_trajectory(self):
         global T
