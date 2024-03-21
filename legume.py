@@ -10,13 +10,14 @@ vitesse = random.randint(100, 150)
 
 
 # Création d'une classe représentant les fruits
-class Fruit(pygame.sprite.Sprite):
+class Legume(pygame.sprite.Sprite):
 
     def __init__(self):
-        super().__init__() #fais de la pasteque un sprite sur le jeu
-        self.velocity = 10 #vitesse de la pasteque
-        self.image = pygame.image.load("assets/pasteque.png") #attribue l'image de la pasteque
-        self.rect = self.image.get_rect() #Récupérer les coordonnées de la pasteque
+        super().__init__() #fais des légumes un sprite sur le jeu
+        self.velocity = 10 #vitesse des légumes
+        legume_choisi = random.randint(1, 6)
+        self.image = pygame.image.load("assets/legume_" + str(legume_choisi) + ".png") #attribue l'image des légumes
+        self.rect = self.image.get_rect() #Récupérer les coordonnées des légumes
         self.rect.x = 250
         self.rect.y = 250
 
