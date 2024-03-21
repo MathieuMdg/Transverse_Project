@@ -7,7 +7,7 @@ pygame.init()
 fps = 20
 clock = pygame.time.Clock()
 
-pygame.display.set_caption("Legume Ninja")
+pygame.display.set_caption("Légume Samourai")
 screen = pygame.display.set_mode((1000, 600))
 couleur_rond = (255,255,255)
 
@@ -23,7 +23,7 @@ while running:
     screen.blit(background, (0, 0)) # Pour repositionner le fond d'écran changer les nombres
 
     # Appliquer l'image du fruit
-    screen.blit(game.pasteque.image, game.pasteque.rect)
+    screen.blit(game.legume.image, game.legume.rect)
     # Mettre à jour l'écran
     pygame.display.flip()
     # Si le joueur ferme la fenêtre (ou clique sur le bouton cliquer [plus tard])
@@ -37,11 +37,11 @@ while running:
 
             if event.key == pygame.K_RIGHT:
                 print("yes")
-                print(game.pasteque.rect.y)
-                while (game.pasteque.rect.y < 598):
-                    game.pasteque.move_trajectory()
+                print(game.legume.rect.y)
+                while (game.legume.rect.y < 598):
+                    game.legume.move_trajectory()
                     screen.blit(background, (0, 0))
-                    screen.blit(game.pasteque.image, game.pasteque.rect)
+                    screen.blit(game.legume.image, game.legume.rect)
                     pygame.display.flip()
                     time.sleep(0.05)
 
