@@ -3,7 +3,6 @@ import math
 import os
 import random
 
-
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 height -= 100
@@ -25,9 +24,11 @@ class Legume(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.throw = False
 
-    def restart(self):
-        self.rect.x = width / 2
+    def restart(self, x0):
+        self.rect.x = x0
         self.rect.y = height
+        self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes)))
+        self.image = pygame.transform.scale(self.image, (100, 100))
 
 
     def throw_t_f(self):
@@ -38,12 +39,9 @@ class Legume(pygame.sprite.Sprite):
             self.throw = False
             return False
 
-    def move_trajectory(self, T, angle, vitesse):
+    def move_trajectory(self, T, angle, vitesse, x0):
         self.rect.y = 1/2 * G * T * T + vitesse * math.sin(angle) * T + height
-        print()
-        self.rect.x = vitesse * math.cos(angle) * T + width / 2
-        print(self.rect.y)
-        print(self.rect.x)
+        self.rect.x = vitesse * math.cos(angle) * T + x0
 
 
 
@@ -60,3 +58,5 @@ class Legume(pygame.sprite.Sprite):
             #print("y = ", self.rect.y)
             #screen.blit(game.pasteque.image, game.pasteque.rect)
             #t += 0.0000001
+
+

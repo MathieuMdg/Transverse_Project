@@ -12,9 +12,11 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("Légume Samouraï")
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 couleur_rond = (255, 255, 255)
+color_light = (170, 170, 170)
+color_dark = (100, 100, 100)
 width, height = screen.get_size()
 
-menu_background = pygame.image.load('menu_assets/legume_samourai - menu.jpg')
+menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
 menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
 screen.blit(menu_stretchedbg, (0, 0))
 game = Game()
@@ -71,19 +73,22 @@ while running:
 
     if game.legume.throw:
         print("start")
-        angle = random.uniform(-math.pi / 3, -2 * math.pi / 3)
-        vitesse = random.randint(120, 150)
+        angle = random.uniform(-math.pi / 2 - math.pi / 12, -math.pi / 2 + math.pi / 12)
+        print(angle)
+        vitesse = random.randint(100, 115)
         T = 0
 
+        x0 = random.randint(1, width-1)
+        game.legume.restart(x0)
+
         while game.legume.rect.y < height:
-            game.legume.move_trajectory(T, angle, vitesse)
+            game.legume.move_trajectory(T, angle, vitesse, x0)
             screen.blit(stretchedbg, (0, 0))
             screen.blit(game.legume.image, game.legume.rect)
             pygame.display.flip()
             T = T + 1
             time.sleep(0.05)
         print("finish")
-        game.legume.restart()
         game.legume.throw = False
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
