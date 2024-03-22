@@ -12,13 +12,16 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("Légume Samouraï")
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 couleur_rond = (255, 255, 255)
+color_light = (170, 170, 170)
 width, height = screen.get_size()
 
-menu_background = pygame.image.load('menu_assets/legume_samourai - menu.jpg')
+mouse = pygame.mouse.get_pos()
+
+menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
 menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
 screen.blit(menu_stretchedbg, (0, 0))
 game = Game()
-screen.blit(game.start_button.image,  game.start_button.rect)
+"""screen.blit(game.start_button.image, game.start_button.image.get_rect(center = screen.get_rect().center))"""
 pygame.display.flip()
 
 start = False
@@ -42,12 +45,18 @@ while start != True:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
 
-            if event.button == 1:
+            if width*(38 / 100) <= mouse[0] <= width*(59 / 100) and height * (86 / 100) <= mouse[1] <= height * (
+                    95 / 100):
 
-                if game.start_button.rect.collidepoint(event.pos):
+                start = True
 
-                    start = True
+    if width * (38 / 100) >= mouse[0] <= width * (59 / 100) and height * (86 / 100) >= mouse[1] >= height * (
+            95 / 100):
 
+        """screen.blit(menu_stretchedbg, (0, 0))""" #mettre image avec filtre lumineux
+
+    else:
+        """screen.blit(menu_stretchedbg, (0, 0))""" #mettre bouton normal
 time.sleep(0.5)
 
 background = pygame.image.load('background/background_1.jpeg')
