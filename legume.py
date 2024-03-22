@@ -59,4 +59,16 @@ class Legume(pygame.sprite.Sprite):
             #screen.blit(game.pasteque.image, game.pasteque.rect)
             #t += 0.0000001
 
+"""
+1792  38%  41%
 
+678
+1052
+1111
+737
+
+1024  86%  5%
+884
+970
+135
+"""

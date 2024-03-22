@@ -9,9 +9,9 @@ class Start_button:
 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("menu_assets/start_button.png")
+        self.image = pygame.image.load("menu_assets/startbutton.png")
         self.rect = self.image.get_rect()
-        self.rect.x = width/2
+        self.rect.x = (width/2)
         self.rect.y = height/2
 
 
