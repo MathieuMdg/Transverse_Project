@@ -2,6 +2,7 @@ import pygame
 import math
 import os
 import random
+import time
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
@@ -24,6 +25,7 @@ class Legume(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.throw = False
 
+
     def restart(self, x0):
         self.rect.x = x0
         self.rect.y = height
@@ -44,31 +46,22 @@ class Legume(pygame.sprite.Sprite):
         self.rect.x = vitesse * math.cos(angle) * T + x0
 
 
+    def move(self, stretchedbg):
+        if self.throw:
+            print("start")
+            angle = random.uniform(-math.pi / 2 - math.pi / 12, -math.pi / 2 + math.pi / 12)
+            print(angle)
+            vitesse = random.randint(100, 115)
+            T = 0
 
+            x0 = random.randint(1, width-1)
+            self.restart(x0)
 
-#v0 = 100
-       # x0 = 500
-        #a = 60
-        #t = 1
-        #for i in range (10):
-            #self.rect.x = v0 * math.cos(a) * t + x0
-         #   self.rect.y += 1/2 * G * (t*t)
-          #  time.sleep(1)
-           # print(" x = ", self.rect.x)
-            #print("y = ", self.rect.y)
-            #screen.blit(game.pasteque.image, game.pasteque.rect)
-            #t += 0.0000001
-
-"""
-1792  38%  41%
-
-678
-1052
-1111
-737
-
-1024  86%  5%
-884
-970
-135
-"""
+            while self.rect.y < height:
+                self.move_trajectory(T, angle, vitesse, x0)
+                screen.blit(stretchedbg, (0, 0))
+                screen.blit(self.image, self.rect)
+                pygame.display.flip()
+                T = T + 1
+                time.sleep(0.05)
+            print("finish")

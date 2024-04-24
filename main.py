@@ -5,6 +5,14 @@ import random
 import math
 
 
+##510 < x < 730 (en haut)
+##630 = y
+
+##500 < x < 740
+# y = 675
+
+
+
 pygame.init()
 fps = 20
 clock = pygame.time.Clock()
@@ -21,12 +29,15 @@ menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
 menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
 screen.blit(menu_stretchedbg, (0, 0))
 game = Game()
+
+
 """screen.blit(game.start_button.image, game.start_button.image.get_rect(center = screen.get_rect().center))"""
 pygame.display.flip()
 
 start = False
 
 while start != True:
+
 
     for event in pygame.event.get():
 
@@ -36,6 +47,16 @@ while start != True:
             pygame.quit()
             print("Fermeture du jeu")
 
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+
+                print(event.pos)  # Coordonnées du clique
+
+                # Detecte si le joueur a cliquer sur le bouton start
+                if (730 > event.pos[0] > 510) and (630 < event.pos[1] < 675):
+                    start = True
+
+
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
 
@@ -43,31 +64,27 @@ while start != True:
                 pygame.quit()
                 print("Fermeture du jeu")
 
-        elif event.type == pygame.MOUSEBUTTONDOWN:
 
-            if width*(38 / 100) <= mouse[0] <= width*(59 / 100) and height * (86 / 100) <= mouse[1] <= height * (
-                    95 / 100):
 
-                start = True
 
-    if width * (38 / 100) >= mouse[0] <= width * (59 / 100) and height * (86 / 100) >= mouse[1] >= height * (
-            95 / 100):
 
-        """screen.blit(menu_stretchedbg, (0, 0))""" #mettre image avec filtre lumineux
-
-    else:
-        """screen.blit(menu_stretchedbg, (0, 0))""" #mettre bouton normal
-time.sleep(0.5)
 
 background = pygame.image.load('background/background_1.jpeg')
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
+
+
+
 
 running = True
 # Charger le jeu
 game = Game()
 # Boucle tant que la condition est vraie
 while running:
+
+
+
     clock.tick(fps)
+
     # Appliquer l'arrière plan de notre jeu
     screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
 
@@ -80,19 +97,20 @@ while running:
 
     if game.legume.throw:
         print("start")
-        angle = random.uniform(-math.pi / 3, -2 * math.pi / 3)
-        vitesse = random.randint(120, 150)
+        angle = random.uniform(-math.pi / 2 + math.pi / 12, -math.pi / 2 - math.pi /12)
+        vitesse = random.randint(100, 110)
         T = 0
+        x0 = random.randint(40, width - 40)
 
         while game.legume.rect.y < height:
-            game.legume.move_trajectory(T, angle, vitesse)
+            game.legume.move_trajectory(T, angle, vitesse, x0)
             screen.blit(stretchedbg, (0, 0))
             screen.blit(game.legume.image, game.legume.rect)
             pygame.display.flip()
             T = T + 1
             time.sleep(0.05)
         print("finish")
-        game.legume.restart()
+        game.legume.restart(x0)
         game.legume.throw = False
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
@@ -119,9 +137,10 @@ while running:
                 angle = random.uniform(-math.pi / 3, -2 * math.pi / 3)
                 vitesse = random.randint(120, 150)
                 T = 0
+                x0 = random.randint(40, width-40)
 
                 while game.legume.rect.y < height:
-                    game.legume.move_trajectory(T, angle, vitesse)
+                    game.legume.move_trajectory(T, angle, vitesse, x0)
                     screen.blit(stretchedbg, (0, 0))
                     screen.blit(game.legume.image, game.legume.rect)
                     pygame.display.flip()
