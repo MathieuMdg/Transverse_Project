@@ -21,32 +21,29 @@ class Legume(pygame.sprite.Sprite):
         self.velocity = random.randint(90, 110)  # vitesse initiale des légumes
         self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes)))  # attribue l'image des légumes
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
-        self.x_init = random.randint(40, width - 40)
+        self.x_init = random.randint(60, width - 60)
         self.rect.x = self.x_init
         self.rect.y = height
         self.angle = random.uniform(-math.pi / 2 + math.pi / 12, -math.pi / 2 - math.pi /12)
         self.image = pygame.transform.scale(self.image, (100, 100))
-        self.throw = False
         self.all_legumes = pygame.sprite.Group()
         self.clock = 0
-
 
 
     def lunch_legume(self):
         self.all_legumes.add(Legume())
 
-##    def throw_t_f(self):
-##      if random.random() >= 0.9:
-##            self.throw = True
-##            self.all_legumes.add(Legume())
 
-#            return True
-#        else:
-#            self.throw = False
-#            return False
+    def remove(self):
+        self.all_legumes.remove(self)
 
     def move_trajectory(self):
         self.rect.y = 1/2 * G * self.clock * self.clock + self.velocity * math.sin(self.angle) * self.clock + height
         self.rect.x = self.velocity * math.cos(self.angle) * self.clock + self.x_init
         self.clock += 0.7
 
+        # Vérifier que le projectile est hors écran
+        if self.rect.y > width:
+
+            # Supprime le projectile
+            self.remove()

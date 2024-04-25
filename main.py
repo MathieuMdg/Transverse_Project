@@ -5,14 +5,6 @@ import random
 import math
 
 
-##510 < x < 730 (en haut)
-##630 = y
-
-##500 < x < 740
-# y = 675
-
-
-
 pygame.init()
 fps = 20
 clock = pygame.time.Clock()
@@ -30,14 +22,12 @@ menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height)
 screen.blit(menu_stretchedbg, (0, 0))
 game = Game()
 
-
 """screen.blit(game.start_button.image, game.start_button.image.get_rect(center = screen.get_rect().center))"""
 pygame.display.flip()
 
 start = False
 
 while start != True:
-
 
     for event in pygame.event.get():
 
@@ -59,19 +49,12 @@ while start != True:
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-
                 running = False
                 pygame.quit()
                 print("Fermeture du jeu")
 
-
-
-
-
-
 background = pygame.image.load('background/background_1.jpeg')
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
-
 
 x = 0
 
@@ -81,34 +64,27 @@ game = Game()
 # Boucle tant que la condition est vraie
 while running:
 
-
-
     clock.tick(fps)
 
     # Appliquer l'arrière plan de notre jeu
     screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
 
-
-
     game.legume.lunch_legume()
 
+    # Récupérer tous les légumes
     for legumes in game.legume.all_legumes:
+
+        # Déclenche le mouvement des fruits
         legumes.move_trajectory()
 
     # Appliquer l'ensemble des images de légumes
     game.legume.all_legumes.draw(screen)
 
-
     # Mettre à jour l'écran
     pygame.display.flip()
 
-#    game.legume.throw_t_f()
 
-#    if game.legume.throw:
-#        print("start")
-#        print("finish")
-#        game.legume.restart()
-#        game.legume.throw = False
+    pos_souris = pygame.mouse.get_pos()
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():
@@ -129,7 +105,6 @@ while running:
                 print("Fermeture du jeu")
 
             if event.key == pygame.K_RIGHT:
-
                 print("start")
                 print("finish")
 
@@ -140,5 +115,10 @@ while running:
                 pygame.display.flip()
                 print(event.pos)  # Coordonnées du clique
                 print("Découpe enclenchée")
-                # print(event.button)  # numéro du bouton
-                # if event.type == pygame.MOUSEMOTION:
+                for legumes in game.legume.all_legumes:
+                    if legumes.rect.collidepoint(event.pos):
+
+                        # Supprime le légume si touché
+                        if legumes.remove():
+                            print("Miam")
+
