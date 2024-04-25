@@ -73,7 +73,7 @@ background = pygame.image.load('background/background_1.jpeg')
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
 
 
-
+x = 0
 
 running = True
 # Charger le jeu
@@ -88,30 +88,27 @@ while running:
     # Appliquer l'arrière plan de notre jeu
     screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
 
-    # Appliquer l'image du fruit
-    screen.blit(game.legume.image, game.legume.rect)
+
+
+    game.legume.lunch_legume()
+
+    for legumes in game.legume.all_legumes:
+        legumes.move_trajectory()
+
+    # Appliquer l'ensemble des images de légumes
+    game.legume.all_legumes.draw(screen)
+
+
     # Mettre à jour l'écran
     pygame.display.flip()
 
-    game.legume.throw_t_f()
+#    game.legume.throw_t_f()
 
-    if game.legume.throw:
-        print("start")
-        angle = random.uniform(-math.pi / 2 + math.pi / 12, -math.pi / 2 - math.pi /12)
-        vitesse = random.randint(100, 110)
-        T = 0
-        x0 = random.randint(40, width - 40)
-
-        while game.legume.rect.y < height:
-            game.legume.move_trajectory(T, angle, vitesse, x0)
-            screen.blit(stretchedbg, (0, 0))
-            screen.blit(game.legume.image, game.legume.rect)
-            pygame.display.flip()
-            T = T + 1
-            time.sleep(0.05)
-        print("finish")
-        game.legume.restart(x0)
-        game.legume.throw = False
+#    if game.legume.throw:
+#        print("start")
+#        print("finish")
+#        game.legume.restart()
+#        game.legume.throw = False
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():
@@ -134,20 +131,7 @@ while running:
             if event.key == pygame.K_RIGHT:
 
                 print("start")
-                angle = random.uniform(-math.pi / 3, -2 * math.pi / 3)
-                vitesse = random.randint(120, 150)
-                T = 0
-                x0 = random.randint(40, width-40)
-
-                while game.legume.rect.y < height:
-                    game.legume.move_trajectory(T, angle, vitesse, x0)
-                    screen.blit(stretchedbg, (0, 0))
-                    screen.blit(game.legume.image, game.legume.rect)
-                    pygame.display.flip()
-                    T = T + 1
-                    time.sleep(0.05)
                 print("finish")
-                game.legume.restart()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:

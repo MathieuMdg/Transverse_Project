@@ -4,6 +4,7 @@ import os
 import random
 import time
 
+T = 0
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 height -= 100
@@ -17,51 +18,35 @@ class Legume(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
-        self.velocity = 10  # vitesse des légumes
+        self.velocity = random.randint(90, 110)  # vitesse initiale des légumes
         self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes)))  # attribue l'image des légumes
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
-        self.rect.x = width / 2
+        self.x_init = random.randint(40, width - 40)
+        self.rect.x = self.x_init
         self.rect.y = height
+        self.angle = random.uniform(-math.pi / 2 + math.pi / 12, -math.pi / 2 - math.pi /12)
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.throw = False
+        self.all_legumes = pygame.sprite.Group()
+        self.clock = 0
 
 
-    def restart(self, x0):
-        self.rect.x = x0
-        self.rect.y = height
-        self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes)))
-        self.image = pygame.transform.scale(self.image, (100, 100))
 
+    def lunch_legume(self):
+        self.all_legumes.add(Legume())
 
-    def throw_t_f(self):
-        if random.random() >= 0.9:
-            self.throw = True
-            return True
-        else:
-            self.throw = False
-            return False
+##    def throw_t_f(self):
+##      if random.random() >= 0.9:
+##            self.throw = True
+##            self.all_legumes.add(Legume())
 
-    def move_trajectory(self, T, angle, vitesse, x0):
-        self.rect.y = 1/2 * G * T * T + vitesse * math.sin(angle) * T + height
-        self.rect.x = vitesse * math.cos(angle) * T + x0
+#            return True
+#        else:
+#            self.throw = False
+#            return False
 
+    def move_trajectory(self):
+        self.rect.y = 1/2 * G * self.clock * self.clock + self.velocity * math.sin(self.angle) * self.clock + height
+        self.rect.x = self.velocity * math.cos(self.angle) * self.clock + self.x_init
+        self.clock += 0.7
 
-    def move(self, stretchedbg):
-        if self.throw:
-            print("start")
-            angle = random.uniform(-math.pi / 2 - math.pi / 12, -math.pi / 2 + math.pi / 12)
-            print(angle)
-            vitesse = random.randint(100, 115)
-            T = 0
-
-            x0 = random.randint(1, width-1)
-            self.restart(x0)
-
-            while self.rect.y < height:
-                self.move_trajectory(T, angle, vitesse, x0)
-                screen.blit(stretchedbg, (0, 0))
-                screen.blit(self.image, self.rect)
-                pygame.display.flip()
-                T = T + 1
-                time.sleep(0.05)
-            print("finish")
