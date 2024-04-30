@@ -5,20 +5,20 @@ from legume import Legume
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 
-class Start_button:
-
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("assets/legume_carotte.png")
-        self.rect = self.image.get_rect()
-        self.rect.x = (width/2)
-        self.rect.y = height/2
-
 
 # Création d'une classe qui va représenter le jeu
 class Game:
 
     def __init__(self):
         # Générer les légumes
-        self.legume = Legume()
-        self.start_button = Start_button()
+        self.legume = Legume(self)
+        self.all_legumes = pygame.sprite.Group()
+
+
+    def lunch_legume(self):
+        #Créer une nouvelle instance de legume
+        self.all_legumes.add(Legume(self))
+
+
+    def check_collision(self, sprite, group):
+        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)

@@ -9,11 +9,17 @@ pygame.init()
 fps = 20
 clock = pygame.time.Clock()
 
+
+
+
 pygame.display.set_caption("Légume Samouraï")
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 couleur_rond = (255, 255, 255)
 color_light = (170, 170, 170)
 width, height = screen.get_size()
+
+pourcentage_x = width / 1280
+pourcentage_y = height / 720
 
 mouse = pygame.mouse.get_pos()
 
@@ -43,7 +49,7 @@ while start != True:
                 print(event.pos)  # Coordonnées du clique
 
                 # Detecte si le joueur a cliquer sur le bouton start
-                if (730 > event.pos[0] > 510) and (630 < event.pos[1] < 675):
+                if (730 * pourcentage_x > event.pos[0] > 510 * pourcentage_x) and (630 * pourcentage_y < event.pos[1] < 675 * pourcentage_y):
                     start = True
 
 
@@ -69,16 +75,18 @@ while running:
     # Appliquer l'arrière plan de notre jeu
     screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
 
-    game.legume.lunch_legume()
+
+    if random.randint(1, 8) < 2:
+        game.lunch_legume()
 
     # Récupérer tous les légumes
-    for legumes in game.legume.all_legumes:
+    for legumes in game.all_legumes:
 
         # Déclenche le mouvement des fruits
         legumes.move_trajectory()
 
     # Appliquer l'ensemble des images de légumes
-    game.legume.all_legumes.draw(screen)
+    game.all_legumes.draw(screen)
 
     # Mettre à jour l'écran
     pygame.display.flip()
@@ -110,15 +118,18 @@ while running:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
+                for legumes in game.all_legumes:
+                    if legumes.rect.collidepoint(event.pos):
+
+                        # Supprime le legume si touché
+                        legumes.remove()
+
                 # screen.fill(couleur_fond)
                 pygame.draw.circle(screen, couleur_rond, event.pos, 2)
                 pygame.display.flip()
                 print(event.pos)  # Coordonnées du clique
                 print("Découpe enclenchée")
-                for legumes in game.legume.all_legumes:
-                    if legumes.rect.collidepoint(event.pos):
 
-                        # Supprime le légume si touché
-                        if legumes.remove():
-                            print("Miam")
+
+
 
