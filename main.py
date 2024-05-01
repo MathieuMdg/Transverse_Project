@@ -124,6 +124,7 @@ while running:
                         # Supprime le legume si touché
                         legumes.remove()
 
+
                 # screen.fill(couleur_fond)
                 pygame.draw.circle(screen, couleur_rond, event.pos, 2)
                 pygame.display.flip()

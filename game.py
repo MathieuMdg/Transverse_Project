@@ -16,9 +16,9 @@ class Game:
 
 
     def lunch_legume(self):
+
         #Créer une nouvelle instance de legume
         self.all_legumes.add(Legume(self))
 
 
-    def check_collision(self, sprite, group):
-        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
+
