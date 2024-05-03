@@ -101,16 +101,20 @@ while running:
     # Appliquer l'ensemble des images de légumes
     game.all_legumes.draw(screen)
 
+    # Caractéristiques de l'affichage du timer
     timer_display = myfont.render(game.timer_update(), 1, (255, 255, 255))
-    screen.blit(timer_display, (width - 50, 0))  ## Blit rendu Font
 
+    # Applique le timer à l'écran
+    screen.blit(timer_display, (width - 50, 0))
+
+    # Caractéristiques de l'affichage du score
     score_display = myfont.render(str(game.player_score), 1, (255, 255, 255))
-    screen.blit(score_display, (width - 50, 50))  ## Blit rendu Font
+
+    # Applique le score à l'écran
+    screen.blit(score_display, (width - 50, 50))
 
     # Mettre à jour l'écran
     pygame.display.flip()
-
-    print(game.player_score)
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():
