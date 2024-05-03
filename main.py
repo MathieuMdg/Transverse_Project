@@ -64,7 +64,7 @@ while start != True:
                 print("Fermeture du jeu")
 
 # Choix de l'arrière-plan du jeu
-background = pygame.image.load('background/background_1.jpeg')
+background = pygame.image.load(game.level_background)
 
 # Applique l'arrière-plan en grand écran
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
@@ -89,14 +89,10 @@ while running:
     pos_souris = pygame.mouse.get_pos()
 
     # Lancement de manière aléatoire des légumes
-    if random.randint(0, 10) == 0:
-        game.lunch_legume()
+    game.lunch_legume()
 
-    # Récupérer tous les légumes
-    for legumes in game.all_legumes:
-
-        # Déclenche le mouvement des fruits
-        legumes.move_trajectory(mouse_down,pos_souris)
+    # Déclencher la trajectoire des légumes
+    game.legume_trajectory(mouse_down, pos_souris)
 
     # Appliquer l'ensemble des images de légumes
     game.all_legumes.draw(screen)
