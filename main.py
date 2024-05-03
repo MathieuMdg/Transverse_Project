@@ -22,12 +22,19 @@ mouse = pygame.mouse.get_pos()
 menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
 menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
 screen.blit(menu_stretchedbg, (0, 0))
+
+# Attribut
 game = Game()
 
-"""screen.blit(game.start_button.image, game.start_button.image.get_rect(center = screen.get_rect().center))"""
 pygame.display.flip()
 
+pygame.font.init()  ## INITIALIZE FONT
+myfont = pygame.font.SysFont('monospace', 16)
+
+# Pour afficher le menu avant l'execution ou non
 start = False
+
+# Initialise la variable mouse_down
 mouse_down = 0
 
 while start != True:
@@ -45,7 +52,7 @@ while start != True:
 
                 print(event.pos)  # Coordonnées du clique
 
-                # Detecte si le joueur a cliquer sur le bouton start
+                # Detecte si le joueur a cliqué sur le bouton start
                 if (730 > event.pos[0] > 510) and (630 < event.pos[1] < 675):
                     start = True
 
@@ -56,7 +63,10 @@ while start != True:
                 pygame.quit()
                 print("Fermeture du jeu")
 
+# Choix de l'arrière-plan du jeu
 background = pygame.image.load('background/background_1.jpeg')
+
+# Applique l'arrière-plan en grand écran
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
 
 
@@ -72,14 +82,14 @@ while running:
     # Régler le nombre d'images par seconde du jeu
     clock.tick(fps)
 
-    # Appliquer l'arrière plan de notre jeu
+    # Appliquer l'arrière-plan de notre jeu
     screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
 
     # Récupérer les coordonnées de la souris
     pos_souris = pygame.mouse.get_pos()
 
     # Lancement de manière aléatoire des légumes
-    if random.randint(0, 10) < 1:
+    if random.randint(0, 10) == 0:
         game.lunch_legume()
 
     # Récupérer tous les légumes
@@ -91,9 +101,16 @@ while running:
     # Appliquer l'ensemble des images de légumes
     game.all_legumes.draw(screen)
 
+    timer_display = myfont.render(game.timer_update(), 1, (255, 255, 255))
+    screen.blit(timer_display, (width - 50, 0))  ## Blit rendu Font
+
+    score_display = myfont.render(str(game.player_score), 1, (255, 255, 255))
+    screen.blit(score_display, (width - 50, 50))  ## Blit rendu Font
+
     # Mettre à jour l'écran
     pygame.display.flip()
 
+    print(game.player_score)
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():

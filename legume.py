@@ -2,16 +2,14 @@ import pygame
 import math
 import os
 import random
-import time
 
-T = 0
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 height -= 100
 
-G = 9.80665 #constante de gravitation
+G = 9.80665 # Constante de gravitation
 
-noms_legumes = os.listdir("assets") #Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
+noms_legumes = os.listdir("assets") # Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
 
 # Création d'une classe représentant les legumes
 class Legume(pygame.sprite.Sprite):
@@ -21,6 +19,7 @@ class Legume(pygame.sprite.Sprite):
         self.velocity = random.randint(90, 110)  # vitesse initiale des légumes
         self.game = game # importe la classe game dans la classe légume
         self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes)))  # attribue l'image des légumes aléatoirement
+        self.point_given = 1 # Défini le nombre de points que donne le légume
         self.x_init = random.randint(60, width - 60) # position initiale du légume
         self.angle = random.uniform(-math.pi / 2 + math.pi / 12, -math.pi / 2 - math.pi /12) # angle initial du légume
         self.image = pygame.transform.scale(self.image, (100, 100)) # redimensionne l'image sur l'écran
@@ -32,7 +31,7 @@ class Legume(pygame.sprite.Sprite):
 
     def remove(self):
 
-        # Retier le légume du groupe (le supprime également de l'écran
+        # Retirer le légume du groupe (le supprime également de l'écran
         self.game.all_legumes.remove(self)
 
     def move_trajectory(self, mouse_down, pos_souris):
@@ -46,11 +45,18 @@ class Legume(pygame.sprite.Sprite):
 
         # Vérifier si le legume touche la souris
         if mouse_down:
+
+            # Si le sprite légume est touché par la souris
             if self.rect.collidepoint(pos_souris):
+
+                # Ajoute le nombre de points donné par le légume aux points du joueur
+                self.game.player_score += self.point_given
+
+                # Supprime le légume
                 self.remove()
 
-        # Vérifier que le projectile est hors écran
+        # Vérifier que le légume est hors écran
         if self.rect.y > width:
 
-            # Supprime le projectile
+            # Supprime le légume
             self.remove()
