@@ -1,6 +1,20 @@
-[] Comprendre ou spawn les images et sous quelles conditions - fait
-[] Comprendre le déplacement de la trajectoire et les différentes variables - fait
-[] Smoothscale (comprendre comment ça marche)
-[] Créer un menu avant le lancement du jeu
-[] Faire apparaître plusieurs legumes
+Initialiser le jeu :
 
+    [/] Comprendre ou spawn les images et sous quelles conditions - fait
+    [/] Comprendre le déplacement de la trajectoire et les différentes variables - fait
+    [/] Smoothscale (comprendre comment ça marche)
+    [/] Créer un menu avant le lancement du jeu
+    [/] Faire apparaître plusieurs legumes
+
+Implémenter les fonctionnalités :
+
+    [] Ajouter un système de points
+    [] Ajouter les "anti-légumes"
+    [] Ajouter un timer
+    [] Ajouter des niveaux et de la difficulté
+
+Améliorer le jeu :
+
+    [] Ajouter de nouveaux design
+    [] Permettre à l'utilisateur de choisir son décor et ses légumes
+    [] Ajouter une fonction de sauvegarde (progression dans les niveaux, cosmetics débloqués par l'utilisateur, ...)
