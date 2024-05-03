@@ -2,23 +2,20 @@ import pygame
 from legume import Legume
 
 
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-width, height = screen.get_size()
-
-class Start_button:
-
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("assets/legume_carotte.png")
-        self.rect = self.image.get_rect()
-        self.rect.x = (width/2)
-        self.rect.y = height/2
-
-
 # Création d'une classe qui va représenter le jeu
 class Game:
 
     def __init__(self):
         # Générer les légumes
-        self.legume = Legume()
-        self.start_button = Start_button()
+        self.legume = Legume(self)
+
+        # Créer un groupe de légume pour pouvoir en afficher plusieurs
+        self.all_legumes = pygame.sprite.Group()
+
+        # Définir le score du joueur
+        self.player_score = 0
+
+    def lunch_legume(self):
+
+        #Ajouter le légume dans le groupe
+        self.all_legumes.add(Legume(self))

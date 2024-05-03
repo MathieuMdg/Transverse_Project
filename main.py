@@ -6,7 +6,7 @@ import math
 
 
 pygame.init()
-fps = 20
+fps = 30
 clock = pygame.time.Clock()
 
 pygame.display.set_caption("Légume Samouraï")
@@ -15,6 +15,8 @@ couleur_rond = (255, 255, 255)
 color_light = (170, 170, 170)
 width, height = screen.get_size()
 
+print(width)
+print(height)
 mouse = pygame.mouse.get_pos()
 
 menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
@@ -26,6 +28,7 @@ game = Game()
 pygame.display.flip()
 
 start = False
+mouse_down = 0
 
 while start != True:
 
@@ -56,35 +59,41 @@ while start != True:
 background = pygame.image.load('background/background_1.jpeg')
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
 
-x = 0
 
+# Pour démarrer le jeu
 running = True
+
 # Charger le jeu
 game = Game()
+
 # Boucle tant que la condition est vraie
 while running:
 
+    # Régler le nombre d'images par seconde du jeu
     clock.tick(fps)
 
     # Appliquer l'arrière plan de notre jeu
     screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
 
-    game.legume.lunch_legume()
+    # Récupérer les coordonnées de la souris
+    pos_souris = pygame.mouse.get_pos()
+
+    # Lancement de manière aléatoire des légumes
+    if random.randint(0, 10) < 1:
+        game.lunch_legume()
 
     # Récupérer tous les légumes
-    for legumes in game.legume.all_legumes:
+    for legumes in game.all_legumes:
 
         # Déclenche le mouvement des fruits
-        legumes.move_trajectory()
+        legumes.move_trajectory(mouse_down,pos_souris)
 
     # Appliquer l'ensemble des images de légumes
-    game.legume.all_legumes.draw(screen)
+    game.all_legumes.draw(screen)
 
     # Mettre à jour l'écran
     pygame.display.flip()
 
-
-    pos_souris = pygame.mouse.get_pos()
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():
@@ -108,17 +117,20 @@ while running:
                 print("start")
                 print("finish")
 
+
+        # Si le bouton de la souris est préssé
         elif event.type == pygame.MOUSEBUTTONDOWN:
+
+            # Détecte si c'est le clic gauche de la souris
             if event.button == 1:
-                # screen.fill(couleur_fond)
-                pygame.draw.circle(screen, couleur_rond, event.pos, 2)
-                pygame.display.flip()
-                print(event.pos)  # Coordonnées du clique
-                print("Découpe enclenchée")
-                for legumes in game.legume.all_legumes:
-                    if legumes.rect.collidepoint(event.pos):
 
-                        # Supprime le légume si touché
-                        if legumes.remove():
-                            print("Miam")
+                # Change la valeur de la variable pour détecter si un bouton de la souris est préssé
+                mouse_down = 1
 
+        # Si le bouton de la souris est relevé
+        elif event.type == pygame.MOUSEBUTTONUP:
+
+            # Détecte si c'est le clic gauche de la souris
+            if event.button == 1:
+                # Change la valeur de la variable pour détecter si un bouton de la souris est préssé
+                mouse_down = 0
