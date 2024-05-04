@@ -4,7 +4,6 @@ import pygame
 import random
 import math
 
-
 pygame.init()
 fps = 30
 clock = pygame.time.Clock()
@@ -14,6 +13,9 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 couleur_rond = (255, 255, 255)
 color_light = (170, 170, 170)
 width, height = screen.get_size()
+
+pourcentage_x = width / 1280
+pourcentage_y = height / 720
 
 print(width)
 print(height)
@@ -53,7 +55,7 @@ while start != True:
                 print(event.pos)  # Coordonnées du clique
 
                 # Detecte si le joueur a cliqué sur le bouton start
-                if (730 > event.pos[0] > 510) and (630 < event.pos[1] < 675):
+                if (730 * pourcentage_x > event.pos[0] > 510 * pourcentage_x) and (630 * pourcentage_y < event.pos[1] < 675 * pourcentage_y):
                     start = True
 
 
@@ -101,7 +103,7 @@ while running:
     timer_display = myfont.render(game.timer_update(), 1, (255, 255, 255))
 
     # Applique le timer à l'écran
-    screen.blit(timer_display, (width - 50, 0))
+    screen.blit(timer_display, (width - 70, 0))
 
     # Caractéristiques de l'affichage du score
     score_display = myfont.render(str(game.player_score), 1, (255, 255, 255))
@@ -126,9 +128,20 @@ while running:
         elif event.type == pygame.KEYDOWN:
 
             if event.key == pygame.K_ESCAPE:
-                running = False
-                pygame.quit()
-                print("Fermeture du jeu")
+
+                button_pressed = 0
+
+                print("Ouverture du menu pause")
+
+                while not button_pressed:
+
+                    button_pressed = game.pause(screen)
+
+                if button_pressed == 3:
+
+                    running = False
+                    pygame.quit()
+                    print("Fermeture du jeu")
 
             if event.key == pygame.K_RIGHT:
                 print("start")
