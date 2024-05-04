@@ -6,6 +6,7 @@ from legume import Legume
 from button import Resume_button
 from button import Quit_Button
 from button import Option_Button
+from bomb import Bomb
 
 
 # Création d'une classe qui va représenter le jeu
@@ -25,8 +26,14 @@ class Game:
         # Générer les légumes
         self.legume = Legume(self)
 
+        # Générer les bombes
+        self.bomb = Bomb(self)
+
         # Créer un groupe de légume pour pouvoir en afficher plusieurs
         self.all_legumes = pygame.sprite.Group()
+
+        # Créer un groupe de légume pour pouvoir en afficher plusieurs
+        self.all_bombs = pygame.sprite.Group()
 
         # Définir le score du joueur
         self.player_score = 0
@@ -43,6 +50,7 @@ class Game:
 
 
     def timer_update(self):
+
         self.level_timer = int(time.time() - self.time_start)
         heures = self.level_timer // 3600
         secondes_restantes = self.level_timer % 3600
@@ -51,12 +59,18 @@ class Game:
         timer = str(heures) + ":" + str(minutes) + ":" + str(secondes_final)
         return timer
 
+
     def lunch_legume(self):
 
-        if random.randint(0, 10) == 0:
+            if random.randint(0,8) == 0:
 
-            # Ajouter le légume dans le groupe
-            self.all_legumes.add(Legume(self))
+                # Ajouter le légume dans le groupe
+                self.all_legumes.add(Legume(self))
+
+            if random.randint(0, 30) == 0:
+
+                # Ajouter la bomb dans le groupe
+                self.all_bombs.add(Bomb(self))
 
 
     def legume_trajectory(self, mouse_down, pos_souris):
@@ -66,6 +80,14 @@ class Game:
 
             # Déclenche le mouvement des fruits
             legumes.move_trajectory(mouse_down, pos_souris)
+
+    def bomb_trajectory(self, mouse_down, pos_souris):
+
+        # Récupérer tous les légumes
+        for bombs in self.all_bombs:
+
+            # Déclenche le mouvement des fruits
+            bombs.move_trajectory(mouse_down, pos_souris)
 
 
     def pause(self, screen):

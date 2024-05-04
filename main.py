@@ -31,7 +31,7 @@ game = Game()
 pygame.display.flip()
 
 pygame.font.init()  ## INITIALIZE FONT
-myfont = pygame.font.SysFont('monospace', 16)
+myfont = pygame.font.SysFont('berlinsansfbdemi', 90)
 
 # Pour afficher le menu avant l'execution ou non
 start = False
@@ -106,20 +106,26 @@ while running:
     # Déclencher la trajectoire des légumes
     game.legume_trajectory(mouse_down, pos_souris)
 
+    # Déclencher la trajectoire des légumes
+    game.bomb_trajectory(mouse_down, pos_souris)
+
     # Appliquer l'ensemble des images de légumes
     game.all_legumes.draw(screen)
+
+    # Appliquer l'ensemble des images de légumes
+    game.all_bombs.draw(screen)
 
     # Caractéristiques de l'affichage du timer
     timer_display = myfont.render(game.timer_update(), 1, (255, 255, 255))
 
     # Applique le timer à l'écran
-    screen.blit(timer_display, (width - 70, 0))
+    screen.blit(timer_display, (width - 190, 0))
 
     # Caractéristiques de l'affichage du score
     score_display = myfont.render(str(game.player_score), 1, (255, 255, 255))
 
     # Applique le score à l'écran
-    screen.blit(score_display, (width - 50, 50))
+    screen.blit(score_display, (width - 90, 70))
 
     # Mettre à jour l'écran
     pygame.display.flip()
