@@ -21,7 +21,7 @@ print(width)
 print(height)
 mouse = pygame.mouse.get_pos()
 
-menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
+menu_background = pygame.image.load('menu_assets/menu_pixel_art.jpg')
 menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
 screen.blit(menu_stretchedbg, (0, 0))
 
