@@ -11,7 +11,7 @@ pourcentage_y = height / 720
 
 G = 9.80665 # Constante de gravitation
 
-noms_legumes = os.listdir("assets") # Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
+noms_legumes = os.listdir("assets/pixel_art_assets") # Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
 
 # Création d'une classe représentant les legumes
 class Legume(pygame.sprite.Sprite):
@@ -20,7 +20,7 @@ class Legume(pygame.sprite.Sprite):
         super().__init__()  # fais des légumes un sprite sur le jeu
         self.velocity = random.randint(int(90 * pourcentage_y), int(110 * pourcentage_y))  # vitesse initiale des légumes
         self.game = game # importe la classe game dans la classe légume
-        self.image = pygame.image.load("assets/" + str(random.choice(noms_legumes)))  # attribue l'image des légumes aléatoirement
+        self.image = pygame.image.load("assets/pixel_art_assets/" + str(random.choice(noms_legumes)))  # attribue l'image des légumes aléatoirement
         self.point_given = 1 # Défini le nombre de points que donne le légume
         self.x_init = random.randint(int(60*  pourcentage_x), width - int(60 * pourcentage_x)) # position initiale du légume
         self.angle = random.uniform(-math.pi / 2 + math.pi / 12, -math.pi / 2 - math.pi /12) # angle initial du légume

@@ -38,7 +38,7 @@ class Game:
         self.time_start = time.time()
 
         # Définir le fond d'écran du décor
-        self.level_background = 'background/background_1.jpeg'
+        self.level_background = 'background/background_game_second.jpeg'
 
 
 
