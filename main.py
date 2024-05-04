@@ -59,8 +59,15 @@ while start != True:
                 print(event.pos)  # Coordonnées du clique
 
                 # Detecte si le joueur a cliqué sur le bouton start
-                if (730 * pourcentage_x > event.pos[0] > 510 * pourcentage_x) and (630 * pourcentage_y < event.pos[1] < 675 * pourcentage_y):
+                if (935 * pourcentage_x > event.pos[0] > 341 * pourcentage_x) and (79 * pourcentage_y < event.pos[1] < 146 * pourcentage_y):
                     start = True
+
+                if (705 * pourcentage_x > event.pos[0] > 577 * pourcentage_x) and (190 * pourcentage_y < event.pos[1] < 232 * pourcentage_y):
+
+                    start = True
+                    running = False
+                    pygame.quit()
+                    print("Fermeture du jeu")
 
 
         elif event.type == pygame.KEYDOWN:
