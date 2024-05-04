@@ -39,6 +39,9 @@ start = False
 # Initialise la variable mouse_down
 mouse_down = 0
 
+# Pour démarrer le jeu
+running = True
+
 while start != True:
 
     for event in pygame.event.get():
@@ -50,6 +53,7 @@ while start != True:
             print("Fermeture du jeu")
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
+
             if event.button == 1:
 
                 print(event.pos)  # Coordonnées du clique
@@ -60,20 +64,19 @@ while start != True:
 
 
         elif event.type == pygame.KEYDOWN:
+
             if event.key == pygame.K_ESCAPE:
+
                 running = False
                 pygame.quit()
                 print("Fermeture du jeu")
+                start = True
 
 # Choix de l'arrière-plan du jeu
 background = pygame.image.load(game.level_background)
 
 # Applique l'arrière-plan en grand écran
 stretchedbg = pygame.transform.smoothscale(background, (width, height))
-
-
-# Pour démarrer le jeu
-running = True
 
 # Charger le jeu
 game = Game()
