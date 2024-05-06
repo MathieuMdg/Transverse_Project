@@ -8,6 +8,19 @@ from button import Quit_Button
 from button import Option_Button
 from bomb import Bomb
 
+pygame.init()
+fps = 30
+clock = pygame.time.Clock()
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+width, height = screen.get_size()
+pygame.font.init()  ## INITIALIZE FONT
+myfont = pygame.font.SysFont('berlinsansfbdemi', 90)
+
+
+
+
+
+
 
 # Création d'une classe qui va représenter le jeu
 class Game:
@@ -47,6 +60,61 @@ class Game:
         # Définir le fond d'écran du décor
         self.level_background = 'background/background_game_second.jpeg'
 
+
+    def game_menu(self):
+
+        menu_background = pygame.image.load('menu_assets/menu_pixel_art.jpg')
+        menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
+        screen.blit(menu_stretchedbg, (0, 0))
+        # Mettre à jour l'écran
+        pygame.display.flip()
+
+    def game_load(self, mouse_down):
+
+        # Choix de l'arrière-plan du jeu
+        background = pygame.image.load(self.level_background)
+
+        # Applique l'arrière-plan en grand écran
+        stretchedbg = pygame.transform.smoothscale(background, (width, height))
+
+        # Régler le nombre d'images par seconde du jeu
+        clock.tick(fps)
+
+        # Appliquer l'arrière-plan de notre jeu
+        screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
+
+        # Récupérer les coordonnées de la souris
+        pos_souris = pygame.mouse.get_pos()
+
+        # Lancement de manière aléatoire des légumes
+        self.lunch_legume()
+
+        # Déclencher la trajectoire des légumes
+        self.legume_trajectory(mouse_down, pos_souris)
+
+        # Déclencher la trajectoire des légumes
+        self.bomb_trajectory(mouse_down, pos_souris)
+
+        # Appliquer l'ensemble des images de légumes
+        self.all_legumes.draw(screen)
+
+        # Appliquer l'ensemble des images de légumes
+        self.all_bombs.draw(screen)
+
+        # Caractéristiques de l'affichage du timer
+        timer_display = myfont.render(self.timer_update(), 1, (255, 255, 255))
+
+        # Applique le timer à l'écran
+        screen.blit(timer_display, (width - 190, 0))
+
+        # Caractéristiques de l'affichage du score
+        score_display = myfont.render(str(self.player_score), 1, (255, 255, 255))
+
+        # Applique le score à l'écran
+        screen.blit(score_display, (width - 90, 70))
+
+        # Mettre à jour l'écran
+        pygame.display.flip()
 
 
     def timer_update(self):
@@ -90,7 +158,7 @@ class Game:
             bombs.move_trajectory(mouse_down, pos_souris)
 
 
-    def pause(self, screen):
+    def pause(self):
 
         screen.blit(self.resume_button.image, (self.resume_button.rect.x, self.resume_button.rect.y))
 
@@ -103,8 +171,14 @@ class Game:
 
         for event in pygame.event.get():
 
+            # Si le bouton echap préssé
+            if event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_ESCAPE:
+                    return 3
+
             # Si le bouton de la souris est préssé
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
 
                 # Détecte si c'est le clic gauche de la souris
                 if event.button == 1:
