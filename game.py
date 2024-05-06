@@ -1,12 +1,18 @@
 import pygame
 import time
 import random
+import os
 
 from legume import Legume
 from button import Resume_button
 from button import Quit_Button
 from button import Option_Button
 from bomb import Bomb
+from level_image import Level1
+from level_image import Level3
+from level_image import Level2
+from level_image import Level4
+from level_image import Level5
 
 pygame.init()
 fps = 30
@@ -16,7 +22,7 @@ width, height = screen.get_size()
 pygame.font.init()  ## INITIALIZE FONT
 myfont = pygame.font.SysFont('berlinsansfbdemi', 90)
 
-
+noms_level_background = os.listdir("background/Level_background")
 
 
 
@@ -26,6 +32,21 @@ myfont = pygame.font.SysFont('berlinsansfbdemi', 90)
 class Game:
 
     def __init__(self):
+
+        # Générer les boutons
+        self.level5 = Level5()
+
+        # Générer les boutons
+        self.level4 = Level4()
+
+        # Générer les boutons
+        self.level2 = Level2()
+
+        # Générer les boutons
+        self.level3 = Level3()
+
+        # Générer les boutons
+        self.level1 = Level1()
 
         # Générer les boutons
         self.resume_button = Resume_button()
@@ -58,10 +79,10 @@ class Game:
         self.time_start = time.time()
 
         # Définir l'arrière plan du menu
-        self.menu_background = 'menu_assets/menu_pixel_art.jpg'
+        self.menu_background = 'menu_assets/menu_background_nuit.jpg'
 
         # Définir le fond d'écran du décor
-        self.level_background = 'background/background_game_second.jpeg'
+        self.level_background = ["background_salon.jpeg", "background_arbre.jpg", "background_desert.jpeg", "background_cuisine.jpeg", "background_dojo.jpg"]
 
         # Définir le nombre de temps passé en "pause"
         self.timer_pause = 0
@@ -69,12 +90,20 @@ class Game:
         # Définir le numéro du niveau
         self.level_number = 0
 
+        self.level_difficulty = 0
+
+
+
+
+
 
     def game_menu(self):
 
         menu_background = pygame.image.load(self.menu_background)
         menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
         screen.blit(menu_stretchedbg, (0, 0))
+        start_game = pygame.image.load("menu_assets/button-removebg-preview.png")
+        screen.blit(start_game, (510, 120))
         pygame.display.flip()
 
     def game_restart_level(self):
@@ -90,16 +119,19 @@ class Game:
 
     def game_level_selection(self):
 
-        menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
+        menu_background = pygame.image.load('menu_assets/menu_background_nuit.jpg')
         menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
         screen.blit(menu_stretchedbg, (0, 0))
 
+        screen.blit(self.level1.image, (self.level1.rect.x, self.level1.rect.y))
 
-        screen.blit(self.resume_button.image, (self.resume_button.rect.x, self.resume_button.rect.y))
+        screen.blit(self.level3.image, (self.level3.rect.x, self.level3.rect.y))
 
-        screen.blit(self.option_button.image, (self.option_button.rect.x, self.option_button.rect.y))
+        screen.blit(self.level2.image, (self.level2.rect.x, self.level2.rect.y))
 
-        screen.blit(self.quit_button.image, (self.quit_button.rect.x, self.quit_button.rect.y))
+        screen.blit(self.level4.image, (self.level4.rect.x, self.level4.rect.y))
+
+        screen.blit(self.level5.image, (self.level5.rect.x, self.level5.rect.y))
 
         pygame.display.flip()
 
@@ -120,17 +152,35 @@ class Game:
                     # Récupérer les coordonnées de la souris
                     pos_souris = pygame.mouse.get_pos()
 
-                    if self.resume_button.rect.collidepoint(pos_souris):
+                    if self.level1.rect.collidepoint(pos_souris):
+
+                        self.level_number = 1
 
                         return 1
 
-                    elif self.option_button.rect.collidepoint(pos_souris):
+                    elif self.level2.rect.collidepoint(pos_souris):
+
+                        self.level_number = 2
 
                         return 2
 
-                    elif self.quit_button.rect.collidepoint(pos_souris):
+                    elif self.level3.rect.collidepoint(pos_souris):
+
+                        self.level_number = 3
 
                         return 3
+
+                    elif self.level4.rect.collidepoint(pos_souris):
+
+                        self.level_number = 4
+
+                        return 4
+
+                    elif self.level5.rect.collidepoint(pos_souris):
+
+                        self.level_number = 5
+
+                        return 5
 
 
                     else:
@@ -144,7 +194,7 @@ class Game:
     def game_load_level(self, mouse_down):
 
         # Choix de l'arrière-plan du level
-        background = pygame.image.load(self.level_background)
+        background = pygame.image.load('background/Level_background/' + str(self.level_background[self.level_number - 1]))
 
         # Applique l'arrière-plan en grand écran
         stretchedbg = pygame.transform.smoothscale(background, (width, height))
@@ -301,7 +351,7 @@ class Game:
         # Backgrounds for each level
         level_backgrounds = [
             'background/Background_1.jpeg',
-            'background/background_game_second.jpeg',
+            'background/background_salon.jpeg',
             'menu_assets/menu_pixel_art.jpg',
             'menu_assets/Menu_bg.jpg',
             'background/fruit ninja.jpg'

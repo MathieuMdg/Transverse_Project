@@ -62,5 +62,3 @@ class Legume(pygame.sprite.Sprite):
 
             # Supprime le légume
             self.remove()
-
-
