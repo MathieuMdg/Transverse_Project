@@ -60,6 +60,9 @@ class Game:
         # Définir le fond d'écran du décor
         self.level_background = 'background/background_game_second.jpeg'
 
+        #Définir le nombre de temps passé en "pause"
+        self.timer_pause = 0
+
 
     def game_menu(self):
 
@@ -119,7 +122,7 @@ class Game:
 
     def timer_update(self):
 
-        self.level_timer = int(time.time() - self.time_start)
+        self.level_timer = int(time.time() - self.time_start - self.timer_pause)
         heures = self.level_timer // 3600
         secondes_restantes = self.level_timer % 3600
         minutes = secondes_restantes // 60
@@ -160,14 +163,19 @@ class Game:
 
     def pause(self):
 
+        # Applique l'image du bouton "RESUME"
         screen.blit(self.resume_button.image, (self.resume_button.rect.x, self.resume_button.rect.y))
 
+        # Applique l'image du bouton "OPTION"
         screen.blit(self.option_button.image, (self.option_button.rect.x, self.option_button.rect.y))
 
+        # Applique l'image du bouton "QUIT"
         screen.blit(self.quit_button.image, (self.quit_button.rect.x, self.quit_button.rect.y))
 
         # Mettre à jour l'écran
         pygame.display.flip()
+
+        self.timer_pause = int(time.time() - self.time_start - self.level_timer)
 
         for event in pygame.event.get():
 
