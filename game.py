@@ -57,24 +57,37 @@ class Game:
         # Définir le temps initial
         self.time_start = time.time()
 
+        # Définir l'arrière plan du menu
+        self.menu_background = 'menu_assets/menu_pixel_art.jpg'
+
         # Définir le fond d'écran du décor
         self.level_background = 'background/background_game_second.jpeg'
 
         # Définir le nombre de temps passé en "pause"
         self.timer_pause = 0
 
+        # Définir le numéro du niveau
+        self.level_number = 0
+
 
     def game_menu(self):
 
-        menu_background = pygame.image.load('menu_assets/menu_pixel_art.jpg')
+        menu_background = pygame.image.load(self.menu_background)
         menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
         screen.blit(menu_stretchedbg, (0, 0))
-        # Mettre à jour l'écran
+        pygame.display.flip()
+
+
+    def game_level_selection(self):
+
+        menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
+        menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
+        screen.blit(menu_stretchedbg, (0, 0))
         pygame.display.flip()
 
     def game_load_level(self, mouse_down):
 
-        # Choix de l'arrière-plan du jeu
+        # Choix de l'arrière-plan du level
         background = pygame.image.load(self.level_background)
 
         # Applique l'arrière-plan en grand écran
