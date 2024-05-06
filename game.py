@@ -83,7 +83,53 @@ class Game:
         menu_background = pygame.image.load('menu_assets/Menu_bg.jpg')
         menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
         screen.blit(menu_stretchedbg, (0, 0))
+
+
+        screen.blit(self.resume_button.image, (self.resume_button.rect.x, self.resume_button.rect.y))
+
+        screen.blit(self.option_button.image, (self.option_button.rect.x, self.option_button.rect.y))
+
+        screen.blit(self.quit_button.image, (self.quit_button.rect.x, self.quit_button.rect.y))
+
         pygame.display.flip()
+
+        for event in pygame.event.get():
+
+
+            if event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_ESCAPE:
+                    return -1
+
+            # Si le bouton de la souris est préssé
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+
+                # Détecte si c'est le clic gauche de la souris
+                if event.button == 1:
+
+                    # Récupérer les coordonnées de la souris
+                    pos_souris = pygame.mouse.get_pos()
+
+                    if self.resume_button.rect.collidepoint(pos_souris):
+
+                        return 1
+
+                    elif self.option_button.rect.collidepoint(pos_souris):
+
+                        return 2
+
+                    elif self.quit_button.rect.collidepoint(pos_souris):
+
+                        return 3
+
+
+                    else:
+
+                        return 0
+
+
+
+
 
     def game_load_level(self, mouse_down):
 

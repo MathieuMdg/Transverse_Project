@@ -36,7 +36,7 @@ running = True
 game_level_load = False
 
 # tant qu'un niveau n'est pas sélectionné
-game_level_selection = False
+game_level_selection = True
 
 
 # Boucle tant que la condition est vraie
@@ -53,7 +53,7 @@ while running:
 
                 running = False
                 game_menu = False
-                game_level_selection = False
+                game_level_selection = True
                 pygame.quit()
                 print("Fermeture du jeu")
 
@@ -66,13 +66,13 @@ while running:
                     # Detecte si le joueur a cliqué sur le bouton START
                     if (935 * pourcentage_x > event.pos[0] > 341 * pourcentage_x) and (79 * pourcentage_y < event.pos[1] < 146 * pourcentage_y):
                         game_menu = False
-                        game_level_selection = True
+                        game_level_selection = False
 
                     # Detecte si le joueur a cliqué sur le bouton EXIT
                     if (705 * pourcentage_x > event.pos[0] > 577 * pourcentage_x) and (190 * pourcentage_y < event.pos[1] < 232 * pourcentage_y):
                         game_menu = False
                         running = False
-                        game_level_selection = False
+                        game_level_selection = True
                         pygame.quit()
                         print("Fermeture du jeu")
 
@@ -84,24 +84,24 @@ while running:
                     pygame.quit()
                     print("Fermeture du jeu")
                     game_menu = False
-                    game_level_selection = False
+                    game_level_selection = True
 
 
 
     # Tant que le niveau n'a pas été choisi
-    while game_level_selection:
+    while not game_level_selection:
 
-        game.game_level_selection()
+        game_level_selection = game.game_level_selection()
 
-        for event in pygame.event.get():
+        if game_level_selection == -1:
+            game_level_selection = True
+            game_level_load = False
+            game_menu = True
+            print("Retour au menu")
 
-            if event.type == pygame.KEYDOWN:
+        elif game_level_selection:
+            game_level_load = True
 
-                if event.key == pygame.K_ESCAPE:
-                    game_level_selection = False
-                    game_level_load = False
-                    game_menu = True
-                    print("Retour au menu")
 
 
 
@@ -136,9 +136,9 @@ while running:
 
                     if button_pressed == 3:
 
-                        running = False
-                        pygame.quit()
-                        print("Fermeture du jeu")
+                        game_level_selection = False
+                        game_level_load = False
+                        print("Retour à la selection des niveaux")
 
                 if event.key == pygame.K_RIGHT:
                     print("start")
