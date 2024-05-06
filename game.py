@@ -77,6 +77,16 @@ class Game:
         screen.blit(menu_stretchedbg, (0, 0))
         pygame.display.flip()
 
+    def game_restart_level(self):
+
+        self.player_score = 0
+        self.timer_pause = 0
+        self.time_start = time.time()
+        for legume in self.all_legumes:
+            legume.remove()
+        for bomb in self.all_bombs:
+            bomb.remove()
+
 
     def game_level_selection(self):
 

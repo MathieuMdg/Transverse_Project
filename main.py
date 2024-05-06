@@ -104,7 +104,7 @@ while running:
 
 
 
-
+    game.game_restart_level()
 
     while game_level_load:
 
