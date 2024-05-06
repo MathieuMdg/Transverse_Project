@@ -278,3 +278,55 @@ class Game:
                     else:
 
                         return 0
+
+    def set_level_difficulty(self, level_number):
+        """
+        Set the difficulty and attributes for each level.
+        """
+        if level_number == 1:
+            self.level_difficulty = 1
+        elif level_number == 2:
+            self.level_difficulty = 1.5
+        elif level_number == 3:
+            self.level_difficulty = 2
+        elif level_number == 4:
+            self.level_difficulty = 2.5
+        elif level_number == 5:
+            self.level_difficulty = 3
+
+    def chargement_level(self, mouse_down):
+        """
+        Load the game level based on the selected level number.
+        """
+        # Backgrounds for each level
+        level_backgrounds = [
+            'background/Background_1.jpeg',
+            'background/background_game_second.jpeg',
+            'menu_assets/menu_pixel_art.jpg',
+            'menu_assets/Menu_bg.jpg',
+            'background/fruit ninja.jpg'
+        ]
+
+        # Set the appropriate background for the selected level
+        background = pygame.image.load(level_backgrounds[self.level_number - 1])
+        stretchedbg = pygame.transform.smoothscale(background, (width, height))
+
+        clock.tick(fps)
+        screen.blit(stretchedbg, (0, 0))
+
+        # Retrieve mouse position and handle game logic
+        pos_souris = pygame.mouse.get_pos()
+        self.lunch_legume()
+        self.legume_trajectory(mouse_down, pos_souris)
+        self.bomb_trajectory(mouse_down, pos_souris)
+        self.all_legumes.draw(screen)
+        self.all_bombs.draw(screen)
+
+        # Timer and score display
+        timer_display = myfont.render(self.timer_update(), 1, (255, 255, 255))
+        screen.blit(timer_display, (width - 190, 0))
+
+        score_display = myfont.render(str(self.player_score), 1, (255, 255, 255))
+        screen.blit(score_display, (width - 90, 70))
+
+        pygame.display.flip()
