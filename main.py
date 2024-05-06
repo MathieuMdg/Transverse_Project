@@ -75,7 +75,7 @@ while start != True:
 # Boucle tant que la condition est vraie
 while running:
 
-    game.game_load(mouse_down)
+    game.game_load_level(mouse_down)
 
     # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
     for event in pygame.event.get():

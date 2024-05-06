@@ -51,8 +51,8 @@ class Game:
         # Définir le score du joueur
         self.player_score = 0
 
-        # Définir le timer pour les niveaux
-        self.level_timer = 0
+        # Définir un timer qui augmente tant que le jeu est actif
+        self.timer = 0
 
         # Définir le temps initial
         self.time_start = time.time()
@@ -60,7 +60,7 @@ class Game:
         # Définir le fond d'écran du décor
         self.level_background = 'background/background_game_second.jpeg'
 
-        #Définir le nombre de temps passé en "pause"
+        # Définir le nombre de temps passé en "pause"
         self.timer_pause = 0
 
 
@@ -72,7 +72,7 @@ class Game:
         # Mettre à jour l'écran
         pygame.display.flip()
 
-    def game_load(self, mouse_down):
+    def game_load_level(self, mouse_down):
 
         # Choix de l'arrière-plan du jeu
         background = pygame.image.load(self.level_background)
@@ -122,9 +122,9 @@ class Game:
 
     def timer_update(self):
 
-        self.level_timer = int(time.time() - self.time_start - self.timer_pause)
-        heures = self.level_timer // 3600
-        secondes_restantes = self.level_timer % 3600
+        self.timer = int(time.time() - self.time_start - self.timer_pause)
+        heures = self.timer // 3600
+        secondes_restantes = self.timer % 3600
         minutes = secondes_restantes // 60
         secondes_final = secondes_restantes % 60
         timer = str(heures) + ":" + str(minutes) + ":" + str(secondes_final)
@@ -175,7 +175,7 @@ class Game:
         # Mettre à jour l'écran
         pygame.display.flip()
 
-        self.timer_pause = int(time.time() - self.time_start - self.level_timer)
+        self.timer_pause = int(time.time() - self.time_start - self.timer)
 
         for event in pygame.event.get():
 
