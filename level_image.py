@@ -2,7 +2,6 @@ import pygame
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
-height -= 100
 
 
 # Création d'une classe représentant les images de niveaux
@@ -65,3 +64,6 @@ class Level5(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = width / 2 + 100  # attribue à la position du légume sa position initiale
         self.rect.y = 500  # place le légume en bas de l'écran
+
+
+

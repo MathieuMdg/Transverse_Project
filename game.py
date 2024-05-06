@@ -13,9 +13,8 @@ from level_image import Level3
 from level_image import Level2
 from level_image import Level4
 from level_image import Level5
-
 pygame.init()
-fps = 30
+fps = 320
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
@@ -79,7 +78,7 @@ class Game:
         self.time_start = time.time()
 
         # Définir l'arrière plan du menu
-        self.menu_background = 'menu_assets/menu_background_nuit.jpg'
+        self.menu_background = 'menu_assets/ciel.jpg'
 
         # Définir le fond d'écran du décor
         self.level_background = ["background_salon.jpeg", "background_arbre.jpg", "background_desert.jpeg", "background_cuisine.jpeg", "background_dojo.jpg"]
@@ -92,6 +91,10 @@ class Game:
 
         self.level_difficulty = 0
 
+        self.background_x = 0
+
+        self.background_x2 = width
+
 
 
 
@@ -99,11 +102,12 @@ class Game:
 
     def game_menu(self):
 
-        menu_background = pygame.image.load(self.menu_background)
-        menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
-        screen.blit(menu_stretchedbg, (0, 0))
+        self.menu_defilement()
         start_game = pygame.image.load("menu_assets/button-removebg-preview.png")
         screen.blit(start_game, (510, 120))
+
+        exit_game = pygame.image.load("menu_assets/exit-removebg-preview.png")
+        screen.blit(exit_game, (width/2 - 150, 250))
         pygame.display.flip()
 
     def game_restart_level(self):
@@ -117,11 +121,29 @@ class Game:
             bomb.remove()
 
 
+    def menu_defilement(self):
+
+
+
+        if self.background_x > -width:
+            self.background_x -= 1
+        else:
+            self.background_x = width
+        if self.background_x2 > -width:
+            self.background_x2 -= 1
+        else:
+            self.background_x2 = width
+
+
+        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/ciel.jpg"), (width, height)),(self.background_x, 0))
+        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/ciel2.jpg"), (width, height)),(self.background_x2, 0))
+        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/terre.png"), (width, height)),(self.background_x, 0))
+        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/terre2.png"), (width, height)),(self.background_x2, 0))
+
+
     def game_level_selection(self):
 
-        menu_background = pygame.image.load('menu_assets/menu_background_nuit.jpg')
-        menu_stretchedbg = pygame.transform.smoothscale(menu_background, (width, height))
-        screen.blit(menu_stretchedbg, (0, 0))
+        self.menu_defilement()
 
         screen.blit(self.level1.image, (self.level1.rect.x, self.level1.rect.y))
 
@@ -181,11 +203,9 @@ class Game:
                         self.level_number = 5
 
                         return 5
+            else:
 
-
-                    else:
-
-                        return 0
+                return 0
 
 
 
