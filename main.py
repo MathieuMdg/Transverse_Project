@@ -109,7 +109,9 @@ while running:
     while game_level_load:
 
         # Charge le niveau du jeu
-        game.game_load_level(mouse_down)
+        if game.game_load_level(mouse_down) == 0:
+            game_level_load = False
+            game_level_selection = False
 
         # Si le joueur ferme la fenêtre (ou clique sur le bouton quitter [plus tard])
         for event in pygame.event.get():

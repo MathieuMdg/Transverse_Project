@@ -7,19 +7,23 @@ from legume import Legume
 from button import Resume_button
 from button import Quit_Button
 from button import Option_Button
+from button import Exit_Button
 from bomb import Bomb
 from level_image import Level1
 from level_image import Level3
 from level_image import Level2
 from level_image import Level4
 from level_image import Level5
+
+
 pygame.init()
-fps = 320
+fps = 30
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 pygame.font.init()  ## INITIALIZE FONT
 myfont = pygame.font.SysFont('berlinsansfbdemi', 90)
+texte_font = pygame.font.SysFont('berlinsansfbdemi', 150)
 
 noms_level_background = os.listdir("background/Level_background")
 
@@ -31,6 +35,8 @@ noms_level_background = os.listdir("background/Level_background")
 class Game:
 
     def __init__(self):
+
+        self.exit_button = Exit_Button()
 
         # Générer les boutons
         self.level5 = Level5()
@@ -95,6 +101,8 @@ class Game:
 
         self.background_x2 = width
 
+        self.level_point_objectif = [10, 15, 20, 25, 30]
+
 
 
 
@@ -155,6 +163,10 @@ class Game:
 
         screen.blit(self.level5.image, (self.level5.rect.x, self.level5.rect.y))
 
+        self.exit_button.rect.x = 20
+        self.exit_button.rect.y = height - 150
+        screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
+
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -203,6 +215,12 @@ class Game:
                         self.level_number = 5
 
                         return 5
+
+                    elif self.exit_button.rect.collidepoint(pos_souris):
+
+                        self.level_number = 0
+
+                        return -1
             else:
 
                 return 0
@@ -255,8 +273,83 @@ class Game:
         # Applique le score à l'écran
         screen.blit(score_display, (width - 90, 70))
 
+        if self.player_score < 0:
+            print("Objectif de point perdu")
+            print(self.player_score)
+            while self.level_number != 0:
+                self.end()
+            return 0
+
+        if self.player_score >= self.level_point_objectif[self.level_number - 1]:
+            print("Objectif de point fini")
+            print(self.player_score)
+            while self.level_number != 0:
+                self.end()
+            return 0
+
         # Mettre à jour l'écran
         pygame.display.flip()
+
+
+    def end(self):
+
+        # Choix de l'arrière-plan du level
+        background = pygame.image.load('background/Level_background/' + str(self.level_background[self.level_number - 1]))
+
+        # Applique l'arrière-plan en grand écran
+        stretchedbg = pygame.transform.smoothscale(background, (width, height))
+
+        # Régler le nombre d'images par seconde du jeu
+        clock.tick(fps)
+
+        # Appliquer l'arrière-plan de notre jeu
+        screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
+
+        if self.player_score >= self.level_point_objectif[self.level_number - 1]:
+
+            # Caractéristiques de l'affichage du win
+            texte_display = texte_font.render("WIN", 1, (255, 128, 0))
+
+        else:
+
+            # Caractéristiques de l'affichage du lose
+            texte_display = texte_font.render("LOSE", 1, (255, 128, 0))
+
+        # Déclencher la trajectoire des légumes
+        self.legume_trajectory(0, (0,0))
+
+        # Déclencher la trajectoire des légumes
+        self.bomb_trajectory(0, (0,0))
+
+        # Appliquer l'ensemble des images de légumes
+
+        self.all_legumes.draw(screen)
+
+        # Appliquer l'ensemble des images de légumes
+        self.all_bombs.draw(screen)
+
+        text_rect = texte_display.get_rect(center=(width / 2, height / 2))
+
+        # Applique le timer à l'écran
+        screen.blit(texte_display, text_rect)
+
+        screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
+
+        pygame.display.flip()
+
+        # Récupérer les coordonnées de la souris
+        pos_souris = pygame.mouse.get_pos()
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+
+                # Détecte si c'est le clic gauche de la souris
+                if event.button == 1:
+
+                    if self.exit_button.rect.collidepoint(pos_souris):
+
+                        self.level_number = 0
 
 
     def timer_update(self):
