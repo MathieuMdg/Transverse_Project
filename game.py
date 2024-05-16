@@ -356,11 +356,16 @@ class Game:
 
         # Appliquer l'arrière-plan de notre jeu
         screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
+        if self.level_number != 6:
+            if self.player_score >= self.level_point_objectif[self.level_number - 1]:
 
-        if self.player_score >= self.level_point_objectif[self.level_number - 1]:
+                # Caractéristiques de l'affichage du win
+                texte_display = texte_font.render("WIN", 1, (255, 128, 0))
 
-            # Caractéristiques de l'affichage du win
-            texte_display = texte_font.render("WIN", 1, (255, 128, 0))
+            else:
+
+                # Caractéristiques de l'affichage du lose
+                texte_display = texte_font.render("LOSE", 1, (255, 128, 0))
 
         else:
 

@@ -73,15 +73,7 @@ while running:
                 pygame.quit()
                 print("Fermeture du jeu")
 
-            if event.type == pygame.KEYDOWN:
 
-
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                    pygame.quit()
-                    print("Fermeture du jeu")
-                    game_menu = False
-                    game_level_selection = True
 
 
 
