@@ -97,7 +97,7 @@ class Game:
         # Définir un timer qui augmente tant que le jeu est actif
         self.timer = 0
 
-        self.level_timer = [60, 60, 60, 60, 60, None]
+        self.level_timer = [30, 30, 40, 50, 60, None]
 
         # Définir le temps initial
         self.time_start = time.time()
@@ -327,7 +327,7 @@ class Game:
         # Applique le score à l'écran
         screen.blit(score_display, (0, 70 * pourcentage_y))
 
-        if self.player_score < 0 or self.timer == 0:
+        if self.player_score < 0 or (self.timer == 0 and self.level_number!= 6):
             print("Objectif de point perdu")
             print(self.player_score)
             while self.level_number != 0:
