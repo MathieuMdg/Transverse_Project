@@ -97,6 +97,8 @@ class Game:
         # Définir un timer qui augmente tant que le jeu est actif
         self.timer = 0
 
+        self.level_timer = [60, 60, 60, 60, 60, None]
+
         # Définir le temps initial
         self.time_start = time.time()
 
@@ -317,15 +319,15 @@ class Game:
         timer_display = myfont.render(self.timer_update(), 1, (255, 255, 255))
 
         # Applique le timer à l'écran
-        screen.blit(timer_display, (width - (190 * pourcentage_x), 0))
+        screen.blit(timer_display, (0, 0))
 
         # Caractéristiques de l'affichage du score
         score_display = myfont.render(str(self.player_score), 1, (255, 255, 255))
 
         # Applique le score à l'écran
-        screen.blit(score_display, (width - (90 * pourcentage_x), 70 * pourcentage_y))
+        screen.blit(score_display, (0, 70 * pourcentage_y))
 
-        if self.player_score < 0:
+        if self.player_score < 0 or self.timer == 0:
             print("Objectif de point perdu")
             print(self.player_score)
             while self.level_number != 0:
@@ -411,12 +413,25 @@ class Game:
 
     def timer_update(self):
 
-        self.timer = int(time.time() - self.time_start - self.timer_pause)
-        heures = self.timer // 3600
-        secondes_restantes = self.timer % 3600
-        minutes = secondes_restantes // 60
-        secondes_final = secondes_restantes % 60
-        timer = str(heures) + ":" + str(minutes) + ":" + str(secondes_final)
+        if self.level_number != 6:
+            self.timer = int(self.level_timer[self.level_number - 1] - (time.time() - self.time_start - self.timer_pause))
+            print(self.timer)
+            print(self.level_timer[self.level_number - 1])
+            print(time.time())
+            print(self.time_start)
+            print(self.timer_pause)
+            heures = self.timer // 3600
+            secondes_restantes = self.timer % 3600
+            minutes = secondes_restantes // 60
+            secondes_final = secondes_restantes % 60
+            timer = str(heures) + ":" + str(minutes) + ":" + str(secondes_final)
+        else:
+            self.timer = int(time.time() - self.time_start - self.timer_pause)
+            heures = self.timer // 3600
+            secondes_restantes = self.timer % 3600
+            minutes = secondes_restantes // 60
+            secondes_final = secondes_restantes % 60
+            timer = str(heures) + ":" + str(minutes) + ":" + str(secondes_final)
         return timer
 
 
@@ -464,7 +479,10 @@ class Game:
         # Mettre à jour l'écran
         pygame.display.flip()
 
-        self.timer_pause = int(time.time() - self.time_start - self.timer)
+        if self.level_number == 6:
+            self.timer_pause = int(time.time() - self.time_start - self.timer)
+        else:
+            self.timer_pause = int(time.time() - self.time_start - (self.level_timer[self.level_number - 1] - self.timer))
 
         for event in pygame.event.get():
 
@@ -498,55 +516,3 @@ class Game:
                     else:
 
                         return 0
-
-    def set_level_difficulty(self, level_number):
-        """
-        Set the difficulty and attributes for each level.
-        """
-        if level_number == 1:
-            self.level_difficulty = 1
-        elif level_number == 2:
-            self.level_difficulty = 1.5
-        elif level_number == 3:
-            self.level_difficulty = 2
-        elif level_number == 4:
-            self.level_difficulty = 2.5
-        elif level_number == 5:
-            self.level_difficulty = 3
-
-    def chargement_level(self, mouse_down):
-        """
-        Load the game level based on the selected level number.
-        """
-        # Backgrounds for each level
-        level_backgrounds = [
-            'background/Background_1.jpeg',
-            'background/background_salon.jpeg',
-            'menu_assets/menu_pixel_art.jpg',
-            'menu_assets/Menu_bg.jpg',
-            'background/fruit ninja.jpg'
-        ]
-
-        # Set the appropriate background for the selected level
-        background = pygame.image.load(level_backgrounds[self.level_number - 1])
-        stretchedbg = pygame.transform.smoothscale(background, (width, height))
-
-        clock.tick(fps)
-        screen.blit(stretchedbg, (0, 0))
-
-        # Retrieve mouse position and handle game logic
-        pos_souris = pygame.mouse.get_pos()
-        self.lunch_legume()
-        self.legume_trajectory(mouse_down, pos_souris)
-        self.bomb_trajectory(mouse_down, pos_souris)
-        self.all_legumes.draw(screen)
-        self.all_bombs.draw(screen)
-
-        # Timer and score display
-        timer_display = myfont.render(self.timer_update(), 1, (255, 255, 255))
-        screen.blit(timer_display, (width - 190, 0))
-
-        score_display = myfont.render(str(self.player_score), 1, (255, 255, 255))
-        screen.blit(score_display, (width - 90, 70))
-
-        pygame.display.flip()

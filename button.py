@@ -22,7 +22,7 @@ class Option_Button(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
-        self.image = pygame.image.load("button/option_button.png")  # attribue l'image des butons
+        self.image = pygame.image.load("button/option_button.png")  # attribue l'image des boutons
         self.image = pygame.transform.scale(self.image, (300 * pourcentage_x, 100 * pourcentage_y))  # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = width/2 - (140 * pourcentage_x)  # attribue à la position du légume sa position initiale
