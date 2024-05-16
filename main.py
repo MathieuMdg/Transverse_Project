@@ -13,8 +13,8 @@ color_light = (170, 170, 170)
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 
-pourcentage_x = width / 1280
-pourcentage_y = height / 720
+pourcentage_x = width / 1920
+pourcentage_y = height / 1080
 
 print(width)
 print(height)
@@ -38,14 +38,30 @@ game_level_load = False
 # tant qu'un niveau n'est pas sélectionné
 game_level_selection = True
 
+game_menu_return = 0
+
 
 # Boucle tant que la condition est vraie
 while running:
 
     while game_menu:
 
-        # Charge le menu du jeu
-        game.game_menu()
+        # Charge le menu du menu
+        game_menu_return = game.game_menu()
+
+        # Lorsque le bouton exit est cliqué
+        if game_menu_return == -1:
+            game_menu = False
+            running = False
+            game_level_selection = True
+            pygame.quit()
+            print("Fermeture du jeu")
+            exit()
+
+        # Lorsque le bouton start est cliqué
+        if game_menu_return == 1:
+            game_menu = False
+            game_level_selection = False
 
         for event in pygame.event.get():
 
@@ -57,27 +73,8 @@ while running:
                 pygame.quit()
                 print("Fermeture du jeu")
 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.KEYDOWN:
 
-                if event.button == 1:
-
-                    print(event.pos)  # Coordonnées du clique
-
-                    # Detecte si le joueur a cliqué sur le bouton START
-                    if (935 * pourcentage_x > event.pos[0] > 341 * pourcentage_x) and (79 * pourcentage_y < event.pos[1] < 146 * pourcentage_y):
-                        game_menu = False
-                        game_level_selection = False
-
-                    # Detecte si le joueur a cliqué sur le bouton EXIT
-                    if (705 * pourcentage_x > event.pos[0] > 577 * pourcentage_x) and (190 * pourcentage_y < event.pos[1] < 232 * pourcentage_y):
-                        game_menu = False
-                        running = False
-                        game_level_selection = True
-                        pygame.quit()
-                        print("Fermeture du jeu")
-
-
-            elif event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_ESCAPE:
                     running = False

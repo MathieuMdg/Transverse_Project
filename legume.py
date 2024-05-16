@@ -6,8 +6,8 @@ import random
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 height -= 100
-pourcentage_x = width / 1280
-pourcentage_y = height / 720
+pourcentage_x = width / 1920
+pourcentage_y = height / 1080
 
 G = 9.80665 # Constante de gravitation
 
@@ -18,13 +18,13 @@ class Legume(pygame.sprite.Sprite):
 
     def __init__(self, game):
         super().__init__()  # fais des légumes un sprite sur le jeu
-        self.velocity = random.randint(int(90 * pourcentage_y), int(100 * pourcentage_y))  # vitesse initiale des légumes
+        self.velocity = random.randint(int(90), int(100))  # vitesse initiale des légumes
         self.game = game # importe la classe game dans la classe légume
         self.image = pygame.image.load("assets/pixel_art_assets/" + str(random.choice(noms_legumes)))  # attribue l'image des légumes aléatoirement
         self.point_given = 1 # Défini le nombre de points que donne le légume
         self.x_init = random.randint(int(100 * pourcentage_x), width - int(100 * pourcentage_x)) # position initiale du légume
         self.angle = random.uniform(-math.pi / 2 + math.pi / 20, -math.pi / 2 - math.pi / 20) # angle initial du légume
-        self.image = pygame.transform.scale(self.image, (100, 100)) # redimensionne l'image sur l'écran
+        self.image = pygame.transform.scale(self.image, (100 * pourcentage_x, 100 * pourcentage_y)) # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = self.x_init # attribue à la position du légume sa position initiale
         self.rect.y = height # place le légume en bas de l'écran

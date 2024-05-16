@@ -3,6 +3,11 @@ import time
 import random
 import os
 
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+width, height = screen.get_size()
+pourcentage_x = width / 1920
+pourcentage_y = height / 1080
+
 from legume import Legume
 from button import Resume_button
 from button import Quit_Button
@@ -16,6 +21,7 @@ from level_image import Level2
 from level_image import Level4
 from level_image import Level5
 from level_image import Level_Cadre
+from button import Start_Button
 
 
 pygame.init()
@@ -24,8 +30,8 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 pygame.font.init()  ## INITIALIZE FONT
-myfont = pygame.font.SysFont('berlinsansfbdemi', 90)
-texte_font = pygame.font.SysFont('berlinsansfbdemi', 150)
+myfont = pygame.font.SysFont('berlinsansfbdemi', int(90 * pourcentage_x))
+texte_font = pygame.font.SysFont('berlinsansfbdemi', int(150 * pourcentage_x))
 
 noms_level_background = os.listdir("background/Level_background")
 
@@ -37,6 +43,8 @@ noms_level_background = os.listdir("background/Level_background")
 class Game:
 
     def __init__(self):
+
+        self.start_button = Start_Button()
 
         self.level_cadre = Level_Cadre()
 
@@ -120,12 +128,35 @@ class Game:
     def game_menu(self):
 
         self.menu_defilement()
-        start_game = pygame.image.load("menu_assets/button-removebg-preview.png")
-        screen.blit(start_game, (510, 120))
 
-        exit_game = pygame.image.load("menu_assets/exit-removebg-preview.png")
-        screen.blit(exit_game, (width/2 - 150, 250))
+        screen.blit(self.start_button.image, (self.start_button.rect.x, self.start_button.rect.y))
+
+        self.exit_button.rect.x = width/2 - (150 * pourcentage_x)
+        self.exit_button.rect.y = 250 * pourcentage_y
+
+        screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
+
         pygame.display.flip()
+
+        for event in pygame.event.get():
+
+            # Si le bouton de la souris est préssé
+            if event.type == pygame.MOUSEBUTTONDOWN:
+
+                # Détecte si c'est le clic gauche de la souris
+                if event.button == 1:
+
+                    # Récupérer les coordonnées de la souris
+                    pos_souris = pygame.mouse.get_pos()
+
+                    if self.start_button.rect.collidepoint(pos_souris):
+
+                        return 1
+
+                    if self.exit_button.rect.collidepoint(pos_souris):
+
+                        return -1
+        return 0
 
     def game_restart_level(self):
 
@@ -164,10 +195,6 @@ class Game:
 
         screen.blit(self.level1.image, (self.level1.rect.x, self.level1.rect.y))
 
-        self.all_cadres.add(Level_Cadre())
-        Level_Cadre().rect.x = self.level1.rect.x
-        Level_Cadre().rect.y = self.level1.rect.y
-
         screen.blit(self.level3.image, (self.level3.rect.x, self.level3.rect.y))
 
         screen.blit(self.level2.image, (self.level2.rect.x, self.level2.rect.y))
@@ -177,6 +204,9 @@ class Game:
         screen.blit(self.level5.image, (self.level5.rect.x, self.level5.rect.y))
 
         screen.blit(self.survie_button.image, (self.survie_button.rect.x, self.survie_button.rect.y))
+
+        self.exit_button.rect.x = 20 * pourcentage_x
+        self.exit_button.rect.y = (height - 100) - (50 * pourcentage_y)
 
         screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
 
@@ -287,13 +317,13 @@ class Game:
         timer_display = myfont.render(self.timer_update(), 1, (255, 255, 255))
 
         # Applique le timer à l'écran
-        screen.blit(timer_display, (width - 190, 0))
+        screen.blit(timer_display, (width - (190 * pourcentage_x), 0))
 
         # Caractéristiques de l'affichage du score
         score_display = myfont.render(str(self.player_score), 1, (255, 255, 255))
 
         # Applique le score à l'écran
-        screen.blit(score_display, (width - 90, 70))
+        screen.blit(score_display, (width - (90 * pourcentage_x), 70 * pourcentage_y))
 
         if self.player_score < 0:
             print("Objectif de point perdu")
