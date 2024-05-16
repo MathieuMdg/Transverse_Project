@@ -8,12 +8,14 @@ from button import Resume_button
 from button import Quit_Button
 from button import Option_Button
 from button import Exit_Button
+from button import Survie_Button
 from bomb import Bomb
 from level_image import Level1
 from level_image import Level3
 from level_image import Level2
 from level_image import Level4
 from level_image import Level5
+from level_image import Level_Cadre
 
 
 pygame.init()
@@ -35,6 +37,13 @@ noms_level_background = os.listdir("background/Level_background")
 class Game:
 
     def __init__(self):
+
+        self.level_cadre = Level_Cadre()
+
+        # Créer un groupe de légume pour pouvoir en afficher plusieurs
+        self.all_cadres = pygame.sprite.Group()
+
+        self.survie_button = Survie_Button()
 
         self.exit_button = Exit_Button()
 
@@ -87,7 +96,7 @@ class Game:
         self.menu_background = 'menu_assets/ciel.jpg'
 
         # Définir le fond d'écran du décor
-        self.level_background = ["background_salon.jpeg", "background_arbre.jpg", "background_desert.jpeg", "background_cuisine.jpeg", "background_dojo.jpg"]
+        self.level_background = ["background_salon.jpeg", "background_arbre.jpg", "background_desert.jpeg", "background_cuisine.jpeg", "background_dojo.jpg", "background_montagne.jpg"]
 
         # Définir le nombre de temps passé en "pause"
         self.timer_pause = 0
@@ -101,7 +110,7 @@ class Game:
 
         self.background_x2 = width
 
-        self.level_point_objectif = [10, 15, 20, 25, 30]
+        self.level_point_objectif = [10, 15, 20, 25, 30, None]
 
 
 
@@ -155,6 +164,10 @@ class Game:
 
         screen.blit(self.level1.image, (self.level1.rect.x, self.level1.rect.y))
 
+        self.all_cadres.add(Level_Cadre())
+        Level_Cadre().rect.x = self.level1.rect.x
+        Level_Cadre().rect.y = self.level1.rect.y
+
         screen.blit(self.level3.image, (self.level3.rect.x, self.level3.rect.y))
 
         screen.blit(self.level2.image, (self.level2.rect.x, self.level2.rect.y))
@@ -163,9 +176,12 @@ class Game:
 
         screen.blit(self.level5.image, (self.level5.rect.x, self.level5.rect.y))
 
-        self.exit_button.rect.x = 20
-        self.exit_button.rect.y = height - 150
+        screen.blit(self.survie_button.image, (self.survie_button.rect.x, self.survie_button.rect.y))
+
         screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
+
+        # Appliquer l'ensemble des images de légumes
+        self.all_cadres.draw(screen)
 
         pygame.display.flip()
 
@@ -215,6 +231,12 @@ class Game:
                         self.level_number = 5
 
                         return 5
+
+                    elif self.survie_button.rect.collidepoint(pos_souris):
+
+                        self.level_number = 6
+
+                        return 6
 
                     elif self.exit_button.rect.collidepoint(pos_souris):
 
@@ -279,13 +301,13 @@ class Game:
             while self.level_number != 0:
                 self.end()
             return 0
-
-        if self.player_score >= self.level_point_objectif[self.level_number - 1]:
-            print("Objectif de point fini")
-            print(self.player_score)
-            while self.level_number != 0:
-                self.end()
-            return 0
+        if self.level_number != 6:
+            if self.player_score >= self.level_point_objectif[self.level_number - 1]:
+                print("Objectif de point fini")
+                print(self.player_score)
+                while self.level_number != 0:
+                    self.end()
+                return 0
 
         # Mettre à jour l'écran
         pygame.display.flip()

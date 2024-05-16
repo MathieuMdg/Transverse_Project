@@ -65,5 +65,14 @@ class Level5(pygame.sprite.Sprite):
         self.rect.x = width / 2 + 100  # attribue à la position du légume sa position initiale
         self.rect.y = 500  # place le légume en bas de l'écran
 
+class Level_Cadre(pygame.sprite.Sprite):
 
+    def __init__(self):
+        super().__init__()  # fais des légumes un sprite sur le jeu
+        self.image = pygame.image.load(
+            "background/Level_background/level_cadre-removebg-preview.png")  # attribue l'image des butons
+        self.image = pygame.transform.scale(self.image, (400, 300))  # redimensionne l'image sur l'écran
+        self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
+        self.rect.x = 0  # attribue à la position du légume sa position initiale
+        self.rect.y = 0  # place le légume en bas de l'écran
 
