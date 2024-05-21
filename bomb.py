@@ -15,7 +15,7 @@ class Bomb(pygame.sprite.Sprite):
 
     def __init__(self, game):
         super().__init__()  # fais des légumes un sprite sur le jeu
-        self.velocity = random.randint(int(140 * pourcentage_x), int(160 * pourcentage_x))  # vitesse initiale des légumes
+        self.velocity = random.randint(int(120 * pourcentage_x), int(140 * pourcentage_x))  # vitesse initiale des légumes
         self.game = game # importe la classe game dans la classe légume
         self.image = pygame.image.load("assets/pixel_art_assets/bomb_pixelart.png")  # attribue l'image des légumes aléatoirement
         self.point_given = -3 # Défini le nombre de points que donne le légume

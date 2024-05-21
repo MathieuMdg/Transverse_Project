@@ -75,6 +75,8 @@ while running:
                 pygame.quit()
                 print("Fermeture du jeu")
 
+
+
     # Tant que le niveau n'a pas été choisi
     while not game_level_selection:
 

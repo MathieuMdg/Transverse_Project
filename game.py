@@ -138,8 +138,6 @@ class Game:
 
         screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
 
-        self.read_file()
-
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -160,6 +158,16 @@ class Game:
                     if self.exit_button.rect.collidepoint(pos_souris):
 
                         return -1
+
+            # Detecter si un joueur lâche une touche du clavier
+            elif event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_SPACE:
+
+                    self.reset_file()
+
+        self.read_file()
+
         return 0
 
     def game_restart_level(self):
@@ -640,6 +648,9 @@ class Game:
 
 
     def reset_file(self):
+
+        for i in range(len(self.meilleur_joueur)):
+            self.meilleur_joueur[i] = ""
 
         with open("Data.txt", 'w') as file:
             file.writelines(["()\n", "Meilleur temps (level_1): " + str(self.level_timer[0]) + "\n","()\n",
