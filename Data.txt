@@ -1,7 +1,7 @@
 (Jacques)
 Meilleur temps (level_1): 11
-()
-Meilleur temps (level_2): 30
+(Toni)
+Meilleur temps (level_2): 28
 ()
 Meilleur temps (level_3): 40
 (Mathieu)

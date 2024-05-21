@@ -18,7 +18,7 @@ class Legume(pygame.sprite.Sprite):
 
     def __init__(self, game):
         super().__init__()  # fais des légumes un sprite sur le jeu
-        self.velocity = random.randint(int(90), int(100))  # vitesse initiale des légumes
+        self.velocity = random.randint(int(140 * pourcentage_x), int(160 * pourcentage_x))  # vitesse initiale des légumes
         self.game = game # importe la classe game dans la classe légume
         self.image = pygame.image.load("assets/pixel_art_assets/" + str(random.choice(noms_legumes)))  # attribue l'image des légumes aléatoirement
         self.point_given = 1 # Défini le nombre de points que donne le légume
