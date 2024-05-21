@@ -220,7 +220,9 @@ class Game:
         screen.blit(self.level1.image, (self.level1.rect.x + int(55 * pourcentage_x), self.level1.rect.y + int(40 * pourcentage_y)))
         record_level1_display = joueur_font.render(("Record : " + str(self.meilleur_score[0]) + "s (" + self.meilleur_joueur[0] + ")"), 1, (255, 255, 255))
         record_level1_rect = record_level1_display.get_rect(center=(self.level1.rect.x + int(205 * pourcentage_x), self.level1.rect.y + int(252 * pourcentage_y)))
-        screen.blit(record_level1_display, record_level1_rect)
+
+        if self.meilleur_score[0] != self.level_timer[0]:
+            screen.blit(record_level1_display, record_level1_rect)
 
         screen.blit(cadre, (self.level2.rect.x - int(10 * pourcentage_x), self.level2.rect.y - int(10 * pourcentage_y)))
         screen.blit(self.level2.image, (self.level2.rect.x + int(55 * pourcentage_x), self.level2.rect.y + int(40 * pourcentage_y)))
@@ -228,7 +230,8 @@ class Game:
             ("Record : " + str(self.meilleur_score[1]) + "s (" + self.meilleur_joueur[1] + ")"), 1, (255, 255, 255))
         record_level2_rect = record_level2_display.get_rect(
             center=(self.level2.rect.x + int(205 * pourcentage_x), self.level2.rect.y + int(252 * pourcentage_y)))
-        screen.blit(record_level2_display, record_level2_rect)
+        if self.meilleur_score[1] != self.level_timer[1]:
+            screen.blit(record_level2_display, record_level2_rect)
 
         screen.blit(cadre, (self.level3.rect.x - int(10 * pourcentage_x), self.level3.rect.y - int(10 * pourcentage_y)))
         screen.blit(self.level3.image, (self.level3.rect.x + int(55 * pourcentage_x), self.level3.rect.y + int(40 * pourcentage_y)))
@@ -236,7 +239,8 @@ class Game:
             ("Record : " + str(self.meilleur_score[2]) + "s (" + self.meilleur_joueur[2] + ")"), 1, (255, 255, 255))
         record_level3_rect = record_level3_display.get_rect(
             center=(self.level3.rect.x + int(205 * pourcentage_x), self.level3.rect.y + int(252 * pourcentage_y)))
-        screen.blit(record_level3_display, record_level3_rect)
+        if self.meilleur_score[2] != self.level_timer[2]:
+            screen.blit(record_level3_display, record_level3_rect)
 
         screen.blit(cadre, (self.level4.rect.x - int(10 * pourcentage_x), self.level4.rect.y - int(10 * pourcentage_y)))
         screen.blit(self.level4.image, (self.level4.rect.x + int(55 * pourcentage_x), self.level4.rect.y + int(40 * pourcentage_y)))
@@ -244,7 +248,8 @@ class Game:
             ("Record : " + str(self.meilleur_score[3]) + "s (" + self.meilleur_joueur[3] + ")"), 1, (255, 255, 255))
         record_level4_rect = record_level4_display.get_rect(
             center=(self.level4.rect.x + int(205 * pourcentage_x), self.level4.rect.y + int(252 * pourcentage_y)))
-        screen.blit(record_level4_display, record_level4_rect)
+        if self.meilleur_score[3] != self.level_timer[3]:
+            screen.blit(record_level4_display, record_level4_rect)
 
         screen.blit(cadre, (self.level5.rect.x - int(10 * pourcentage_x), self.level5.rect.y - int(10 * pourcentage_y)))
         screen.blit(self.level5.image, (self.level5.rect.x + int(55 * pourcentage_x), self.level5.rect.y + int(40 * pourcentage_y)))
@@ -252,7 +257,8 @@ class Game:
             ("Record : " + str(self.meilleur_score[4]) + "s (" + self.meilleur_joueur[4] + ")"), 1, (255, 255, 255))
         record_level5_rect = record_level5_display.get_rect(
             center=(self.level5.rect.x + int(205 * pourcentage_x), self.level5.rect.y + int(252 * pourcentage_y)))
-        screen.blit(record_level5_display, record_level5_rect)
+        if self.meilleur_score[4] != self.level_timer[4]:
+            screen.blit(record_level5_display, record_level5_rect)
 
         screen.blit(self.survie_button.image, (self.survie_button.rect.x, self.survie_button.rect.y))
 
@@ -378,7 +384,8 @@ class Game:
 
             record_survie_display = joueur_font.render(
                 ("Record : " + str(self.meilleur_score[5]) + "points (" + self.meilleur_joueur[5] + ")"), 1, (255, 255, 255))
-            screen.blit(record_survie_display, (0, height-30))
+            if self.meilleur_score[5] != 0:
+                screen.blit(record_survie_display, (0, height-30))
 
             if self.player_score > self.meilleur_score[5]:
 
@@ -393,6 +400,7 @@ class Game:
             while self.level_number != 0:
                 self.end()
             return 0
+
         if self.level_number != 6:
             if self.player_score >= self.level_point_objectif[self.level_number - 1]:
                 print("Objectif de point fini")

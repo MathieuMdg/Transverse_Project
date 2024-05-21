@@ -12,6 +12,7 @@ pourcentage_y = height / 1080
 G = 9.80665 # Constante de gravitation
 
 noms_legumes = os.listdir("assets/pixel_art_assets") # Créer une liste qui prend tous les noms d'image de légume dans le dossier assets
+noms_legumes.remove("bomb_pixelart.png")
 
 # Création d'une classe représentant les legumes
 class Legume(pygame.sprite.Sprite):
