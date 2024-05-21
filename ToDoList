@@ -9,15 +9,15 @@ Initialiser le jeu :
 Implémenter les fonctionnalités :
 
     [/] Ajouter un système de points
-    [] Ajouter les "anti-légumes"
+    [/] Ajouter les "anti-légumes"
     [/] Ajouter un timer
-    [] Ajouter des niveaux et de la difficulté
+    [/] Ajouter des niveaux et de la difficulté
     [/] Ajouter un menu pause
 
 Améliorer le jeu :
 
-    [] Améliorer tous les affichages (timer, score, menu, ...)
-    [] Ajouter de nouveaux design
-    [] Système de point adapter à chaque niveau
+    [/] Améliorer tous les affichages (timer, score, menu, ...)
+    [/] Ajouter de nouveaux design
+    [/] Système de point adapter à chaque niveau
     [] Permettre à l'utilisateur de choisir son décor et ses légumes
-    [] Ajouter une fonction de sauvegarde (progression dans les niveaux, cosmetics débloqués par l'utilisateur, ...)
+    [/] Ajouter une fonction de sauvegarde (progression dans les niveaux, cosmetics débloqués par l'utilisateur, ...)
