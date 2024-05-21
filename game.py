@@ -9,22 +9,11 @@ pourcentage_x = width / 1920
 pourcentage_y = height / 1080
 
 from legume import Legume
-from button import Resume_button
-from button import Quit_Button
-from button import Option_Button
-from button import Exit_Button
-from button import Survie_Button
+from button import Resume_button, Quit_Button, Option_Button, Exit_Button, Start_Button, Survie_Button
 from bomb import Bomb
-from level_image import Level1
-from level_image import Level3
-from level_image import Level2
-from level_image import Level4
-from level_image import Level5
-from level_image import Level_Cadre
-from button import Start_Button
+from level_image import Level1, Level2, Level3, Level4, Level5, Level_Cadre
 
 
-pygame.init()
 fps = 30
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -32,8 +21,9 @@ width, height = screen.get_size()
 pygame.font.init()  ## INITIALIZE FONT
 myfont = pygame.font.SysFont('berlinsansfbdemi', int(90 * pourcentage_x))
 texte_font = pygame.font.SysFont('berlinsansfbdemi', int(150 * pourcentage_x))
+joueur_font = pygame.font.SysFont('berlinsansfbdemi', int(30 * pourcentage_x))
 
-noms_level_background = os.listdir("background/Level_background")
+noms_level_background = os.listdir("assets/Level_background")
 
 
 
@@ -43,6 +33,15 @@ noms_level_background = os.listdir("background/Level_background")
 class Game:
 
     def __init__(self):
+
+        # Représente le nom du joueur
+        self.joueur = ""
+
+        # Créer un tableau pour stocker les meilleurs joueurs
+        self.meilleur_joueur = []
+
+        # Créer un tableau pour stocker les meilleurs scores
+        self.meilleur_score = [0, 0, 0, 0, 0, 0]
 
         self.start_button = Start_Button()
 
@@ -103,7 +102,7 @@ class Game:
         self.time_start = time.time()
 
         # Définir l'arrière plan du menu
-        self.menu_background = 'menu_assets/ciel.jpg'
+        self.menu_background = 'menu_assets/sky.jpg'
 
         # Définir le fond d'écran du décor
         self.level_background = ["background_salon.jpeg", "background_arbre.jpg", "background_desert.jpeg", "background_cuisine.jpeg", "background_dojo.jpg", "background_montagne.jpg"]
@@ -129,6 +128,9 @@ class Game:
 
     def game_menu(self):
 
+        # Régler le nombre d'images par seconde du jeu
+        clock.tick(fps)
+
         self.menu_defilement()
 
         screen.blit(self.start_button.image, (self.start_button.rect.x, self.start_button.rect.y))
@@ -137,6 +139,8 @@ class Game:
         self.exit_button.rect.y = 250 * pourcentage_y
 
         screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
+
+        self.read_file()
 
         pygame.display.flip()
 
@@ -185,15 +189,22 @@ class Game:
             self.background_x2 = width
 
 
-        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/ciel.jpg"), (width, height)),(self.background_x, 0))
-        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/ciel2.jpg"), (width, height)),(self.background_x2, 0))
-        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/terre.png"), (width, height)),(self.background_x, 0))
-        screen.blit(pygame.transform.scale(pygame.image.load("menu_assets/terre2.png"), (width, height)),(self.background_x2, 0))
+        screen.blit(pygame.transform.scale(pygame.image.load("assets/menu_assets/sky.jpg"), (width, height)), (self.background_x, 0))
+        screen.blit(pygame.transform.scale(pygame.image.load("assets/menu_assets/sky_inverted.jpg"), (width, height)), (self.background_x2, 0))
+        screen.blit(pygame.transform.scale(pygame.image.load("assets/menu_assets/dirt.png"), (width, height)), (self.background_x, 0))
+        screen.blit(pygame.transform.scale(pygame.image.load("assets/menu_assets/dirt_inverted.png"), (width, height)), (self.background_x2, 0))
 
 
     def game_level_selection(self):
 
+        self.write_file()
+
         self.menu_defilement()
+
+        # Caractéristiques de l'affichage du lose
+        joueur_display = joueur_font.render(("Connecté en tant que " + self.joueur), 1, (255, 255, 255))
+        joueur_rect = joueur_display.get_rect(center=(width / 2, height-20))
+        screen.blit(joueur_display, joueur_rect)
 
         screen.blit(self.level1.image, (self.level1.rect.x, self.level1.rect.y))
 
@@ -291,9 +302,6 @@ class Game:
         # Applique l'arrière-plan en grand écran
         stretchedbg = pygame.transform.smoothscale(background, (width, height))
 
-        # Régler le nombre d'images par seconde du jeu
-        clock.tick(fps)
-
         # Appliquer l'arrière-plan de notre jeu
         screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
 
@@ -318,8 +326,10 @@ class Game:
         # Caractéristiques de l'affichage du timer
         timer_display = myfont.render(self.timer_update(), 1, (255, 255, 255))
 
+        timer_rect = timer_display.get_rect(center=(width / 2, 20))
+
         # Applique le timer à l'écran
-        screen.blit(timer_display, (0, 0))
+        screen.blit(timer_display, timer_rect)
 
         # Caractéristiques de l'affichage du score
         score_display = myfont.render(str(self.player_score), 1, (255, 255, 255))
@@ -327,7 +337,15 @@ class Game:
         # Applique le score à l'écran
         screen.blit(score_display, (0, 70 * pourcentage_y))
 
-        if self.player_score < 0 or (self.timer == 0 and self.level_number!= 6):
+        if self.level_number == 6:
+            if self.player_score > self.meilleur_score[5]:
+
+                self.meilleur_score[5] = self.player_score
+
+                self.meilleur_joueur[self.level_number - 1] = self.joueur
+
+
+        if self.player_score < 0 or (self.timer == 0 and self.level_number != 6):
             print("Objectif de point perdu")
             print(self.player_score)
             while self.level_number != 0:
@@ -363,6 +381,14 @@ class Game:
 
                 # Caractéristiques de l'affichage du win
                 texte_display = texte_font.render("WIN", 1, (255, 128, 0))
+
+                if self.level_timer[self.level_number - 1] - self.timer < self.meilleur_score[self.level_number - 1]:
+
+                    self.meilleur_score[self.level_number - 1] = self.level_timer[self.level_number - 1] - self.timer
+
+                    self.meilleur_joueur[self.level_number - 1] = self.joueur
+
+
 
             else:
 
@@ -415,23 +441,39 @@ class Game:
 
         if self.level_number != 6:
             self.timer = int(self.level_timer[self.level_number - 1] - (time.time() - self.time_start - self.timer_pause))
-            print(self.timer)
-            print(self.level_timer[self.level_number - 1])
-            print(time.time())
-            print(self.time_start)
-            print(self.timer_pause)
             heures = self.timer // 3600
             secondes_restantes = self.timer % 3600
             minutes = secondes_restantes // 60
             secondes_final = secondes_restantes % 60
-            timer = str(heures) + ":" + str(minutes) + ":" + str(secondes_final)
+
         else:
             self.timer = int(time.time() - self.time_start - self.timer_pause)
             heures = self.timer // 3600
             secondes_restantes = self.timer % 3600
             minutes = secondes_restantes // 60
             secondes_final = secondes_restantes % 60
-            timer = str(heures) + ":" + str(minutes) + ":" + str(secondes_final)
+
+        if heures == 0:
+            timer = "00:"
+        elif heures < 10:
+            timer = "0" + str(heures) + ":"
+        else:
+            timer = str(heures) + ":"
+
+        if minutes == 0:
+            timer += "00:"
+        elif minutes < 10:
+            timer += "0" + str(minutes) + ":"
+        else:
+            timer += str(minutes) + ":"
+
+        if secondes_final == 0:
+            timer += "00"
+        elif secondes_final < 10:
+            timer += "0" + str(secondes_final)
+        else:
+            timer += str(secondes_final)
+
         return timer
 
 
@@ -516,3 +558,61 @@ class Game:
                     else:
 
                         return 0
+
+    def read_file(self):
+
+        with open("Data.txt", 'r') as file:
+            lignes = file.readlines()
+
+        str_ = lignes[1]
+        self.meilleur_score[0] = int(str_[26:-1])
+        str_ = lignes[3]
+        self.meilleur_score[1] = int(str_[26:-1])
+        str_ = lignes[5]
+        self.meilleur_score[2] = int(str_[26:-1])
+        str_ = lignes[7]
+        self.meilleur_score[3] = int(str_[26:-1])
+        str_ = lignes[9]
+        self.meilleur_score[4] = int(str_[26:-1])
+        str_ = lignes[11]
+        self.meilleur_score[5] = int(str_[25:])
+
+        str_ = lignes[0]
+        self.meilleur_joueur.append(str_[1:-2])
+        str_ = lignes[2]
+        self.meilleur_joueur.append(str_[1:-2])
+        str_ = lignes[4]
+        self.meilleur_joueur.append(str_[1:-2])
+        str_ = lignes[6]
+        self.meilleur_joueur.append(str_[1:-2])
+        str_ = lignes[8]
+        self.meilleur_joueur.append(str_[1:-2])
+        str_ = lignes[10]
+        self.meilleur_joueur.append(str_[1:-2])
+
+        file.close()
+
+    def write_file(self):
+
+        with open("Data.txt", 'r') as file:
+            lignes = file.readlines()
+
+        str1 = lignes[1]
+        str3 = lignes[3]
+        str5 = lignes[5]
+        str7 = lignes[7]
+        str9 = lignes[9]
+        str11 = lignes[11]
+
+
+        with open("Data.txt", 'w') as file:
+            file.writelines(['(' + str(self.meilleur_joueur[0]) + ')\n',str1[:26] + str(self.meilleur_score[0]) + "\n",'(' + str(self.meilleur_joueur[1]) + ')\n', str3[:26] + str(self.meilleur_score[1]) + "\n",'(' + str(self.meilleur_joueur[2]) + ')\n', str5[:26] + str(self.meilleur_score[2]) + "\n",'(' + str(self.meilleur_joueur[3]) + ')\n' , str7[:26] + str(self.meilleur_score[3]) + "\n",'(' + str(self.meilleur_joueur[4]) + ')\n', str9[:26] + str(self.meilleur_score[4]) + "\n",'(' + str(self.meilleur_joueur[5]) + ')\n', str11[:25] + str(self.meilleur_score[5])])
+
+
+    def reset_file(self):
+
+        with open("Data.txt", 'w') as file:
+            file.writelines(["()\n", "Meilleur temps (level_1): " + str(self.level_timer[0]) + "\n","()\n",
+                            "Meilleur temps (level_2): " + str(self.level_timer[1]) + "\n","()\n", "Meilleur temps (level_3): " + str(self.level_timer[2]) + "\n","()\n",
+                            "Meilleur temps (level_4): "+ str(self.level_timer[3]) + "\n","()\n", "Meilleur temps (level_5): "+ str(self.level_timer[4]) + "\n", "()\n", "Meilleur score (survie): 0"])
+

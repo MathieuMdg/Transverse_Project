@@ -1,10 +1,17 @@
-from game import Game
-import time
+
+nom_joueur = str(input("Choisir le nom du joueur : "))
+while nom_joueur == "":
+    nom_joueur = str(input("Choisir le nom du joueur : "))
+
 import pygame
-import random
-import math
+from game import Game
 
 pygame.init()
+
+# Attribut
+game = Game()
+
+game.joueur = nom_joueur
 
 pygame.display.set_caption("Légume Samouraï")
 couleur_rond = (255, 255, 255)
@@ -19,9 +26,6 @@ pourcentage_y = height / 1080
 print(width)
 print(height)
 mouse = pygame.mouse.get_pos()
-
-# Attribut
-game = Game()
 
 # Pour afficher le menu avant l'execution ou non
 game_menu = True
@@ -39,7 +43,6 @@ game_level_load = False
 game_level_selection = True
 
 game_menu_return = 0
-
 
 # Boucle tant que la condition est vraie
 while running:
@@ -66,16 +69,11 @@ while running:
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
-
                 running = False
                 game_menu = False
                 game_level_selection = True
                 pygame.quit()
                 print("Fermeture du jeu")
-
-
-
-
 
     # Tant que le niveau n'a pas été choisi
     while not game_level_selection:
@@ -90,8 +88,6 @@ while running:
 
         elif game_level_selection:
             game_level_load = True
-
-
 
     game.game_restart_level()
 
@@ -122,11 +118,9 @@ while running:
                     print("Ouverture du menu pause")
 
                     while not button_pressed:
-
                         button_pressed = game.pause()
 
                     if button_pressed == 3:
-
                         game_level_selection = False
                         game_level_load = False
                         print("Retour à la selection des niveaux")
@@ -141,7 +135,6 @@ while running:
 
                 # Détecte si c'est le clic gauche de la souris
                 if event.button == 1:
-
                     # Change la valeur de la variable pour détecter si un bouton de la souris est préssé
                     mouse_down = 1
 

@@ -14,7 +14,7 @@ class Level1(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
         self.image = pygame.image.load(
-            "background/Level_background/background_salon.jpeg")  # attribue l'image des butons
+            "assets/Level_background/background_salon.jpeg")  # attribue l'image des butons
         self.image = pygame.transform.scale(self.image, (int(400 * pourcentage_x), int(300 * pourcentage_y)))  # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = 200 * pourcentage_x  # attribue à la position du légume sa position initiale
@@ -28,7 +28,7 @@ class Level3(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
         self.image = pygame.image.load(
-            "background/Level_background/background_desert.jpeg")  # attribue l'image des butons
+            "assets/Level_background/background_desert.jpeg")  # attribue l'image des butons
         self.image = pygame.transform.scale(self.image, (400 * pourcentage_x, 300 * pourcentage_y))  # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = width - (600 * pourcentage_x)  # attribue à la position du légume sa position initiale
@@ -39,7 +39,7 @@ class Level2(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
         self.image = pygame.image.load(
-            "background/Level_background/background_arbre.jpg")  # attribue l'image des butons
+            "assets/Level_background/background_arbre.jpg")  # attribue l'image des butons
         self.image = pygame.transform.scale(self.image, (400 * pourcentage_x, 300 * pourcentage_y))  # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = width / 2 - (200 * pourcentage_x)  # attribue à la position du légume sa position initiale
@@ -51,7 +51,7 @@ class Level4(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
         self.image = pygame.image.load(
-            "background/Level_background/background_cuisine.jpeg")  # attribue l'image des butons
+            "assets/Level_background/background_cuisine.jpeg")  # attribue l'image des butons
         self.image = pygame.transform.scale(self.image, (400 * pourcentage_x, 300 * pourcentage_y))  # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = 500 * pourcentage_x  # attribue à la position du légume sa position initiale
@@ -63,7 +63,7 @@ class Level5(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
         self.image = pygame.image.load(
-            "background/Level_background/background_dojo.jpg")  # attribue l'image des butons
+            "assets/Level_background/background_dojo.jpg")  # attribue l'image des butons
         self.image = pygame.transform.scale(self.image, (400 * pourcentage_x, 300 * pourcentage_y))  # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = width / 2 + (100 * pourcentage_x)  # attribue à la position du légume sa position initiale
@@ -74,7 +74,7 @@ class Level_Cadre(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  # fais des légumes un sprite sur le jeu
         self.image = pygame.image.load(
-            "background/Level_background/level_cadre-removebg-preview.png")  # attribue l'image des butons
+            "assets/Level_background/level_cadre-removebg-preview.png")  # attribue l'image des butons
         self.image = pygame.transform.scale(self.image, (400, 300))  # redimensionne l'image sur l'écran
         self.rect = self.image.get_rect()  # Récupérer les coordonnées des légumes
         self.rect.x = 0  # attribue à la position du légume sa position initiale
