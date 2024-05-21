@@ -11,7 +11,7 @@ pourcentage_y = height / 1080
 from legume import Legume
 from button import Resume_button, Quit_Button, Option_Button, Exit_Button, Start_Button, Survie_Button
 from bomb import Bomb
-from level_image import Level1, Level2, Level3, Level4, Level5, Level_Cadre
+from level_image import Level1, Level2, Level3, Level4, Level5
 
 
 fps = 30
@@ -19,7 +19,7 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
 pygame.font.init()  ## INITIALIZE FONT
-myfont = pygame.font.SysFont('berlinsansfbdemi', int(90 * pourcentage_x))
+myfont = pygame.font.SysFont('berlinsansfbdemi', int(70 * pourcentage_x))
 texte_font = pygame.font.SysFont('berlinsansfbdemi', int(150 * pourcentage_x))
 joueur_font = pygame.font.SysFont('berlinsansfbdemi', int(30 * pourcentage_x))
 
@@ -44,8 +44,6 @@ class Game:
         self.meilleur_score = [0, 0, 0, 0, 0, 0]
 
         self.start_button = Start_Button()
-
-        self.level_cadre = Level_Cadre()
 
         # Créer un groupe de légume pour pouvoir en afficher plusieurs
         self.all_cadres = pygame.sprite.Group()
@@ -206,15 +204,47 @@ class Game:
         joueur_rect = joueur_display.get_rect(center=(width / 2, height-20))
         screen.blit(joueur_display, joueur_rect)
 
-        screen.blit(self.level1.image, (self.level1.rect.x, self.level1.rect.y))
+        cadre = pygame.image.load("assets/Level_background/level_cadre-removebg-preview.png")
+        cadre = pygame.transform.scale(cadre, (425 * pourcentage_x, 325 * pourcentage_y))
 
-        screen.blit(self.level3.image, (self.level3.rect.x, self.level3.rect.y))
 
-        screen.blit(self.level2.image, (self.level2.rect.x, self.level2.rect.y))
+        screen.blit(cadre, (self.level1.rect.x - int(10 * pourcentage_x), self.level1.rect.y - int(10 * pourcentage_y)))
+        screen.blit(self.level1.image, (self.level1.rect.x + int(55 * pourcentage_x), self.level1.rect.y + int(40 * pourcentage_y)))
+        record_level1_display = joueur_font.render(("Record : " + str(self.meilleur_score[0]) + "s (" + self.meilleur_joueur[0] + ")"), 1, (255, 255, 255))
+        record_level1_rect = record_level1_display.get_rect(center=(self.level1.rect.x + int(205 * pourcentage_x), self.level1.rect.y + int(252 * pourcentage_y)))
+        screen.blit(record_level1_display, record_level1_rect)
 
-        screen.blit(self.level4.image, (self.level4.rect.x, self.level4.rect.y))
+        screen.blit(cadre, (self.level2.rect.x - int(10 * pourcentage_x), self.level2.rect.y - int(10 * pourcentage_y)))
+        screen.blit(self.level2.image, (self.level2.rect.x + int(55 * pourcentage_x), self.level2.rect.y + int(40 * pourcentage_y)))
+        record_level2_display = joueur_font.render(
+            ("Record : " + str(self.meilleur_score[1]) + "s (" + self.meilleur_joueur[1] + ")"), 1, (255, 255, 255))
+        record_level2_rect = record_level2_display.get_rect(
+            center=(self.level2.rect.x + int(205 * pourcentage_x), self.level2.rect.y + int(252 * pourcentage_y)))
+        screen.blit(record_level2_display, record_level2_rect)
 
-        screen.blit(self.level5.image, (self.level5.rect.x, self.level5.rect.y))
+        screen.blit(cadre, (self.level3.rect.x - int(10 * pourcentage_x), self.level3.rect.y - int(10 * pourcentage_y)))
+        screen.blit(self.level3.image, (self.level3.rect.x + int(55 * pourcentage_x), self.level3.rect.y + int(40 * pourcentage_y)))
+        record_level3_display = joueur_font.render(
+            ("Record : " + str(self.meilleur_score[2]) + "s (" + self.meilleur_joueur[2] + ")"), 1, (255, 255, 255))
+        record_level3_rect = record_level3_display.get_rect(
+            center=(self.level3.rect.x + int(205 * pourcentage_x), self.level3.rect.y + int(252 * pourcentage_y)))
+        screen.blit(record_level3_display, record_level3_rect)
+
+        screen.blit(cadre, (self.level4.rect.x - int(10 * pourcentage_x), self.level4.rect.y - int(10 * pourcentage_y)))
+        screen.blit(self.level4.image, (self.level4.rect.x + int(55 * pourcentage_x), self.level4.rect.y + int(40 * pourcentage_y)))
+        record_level4_display = joueur_font.render(
+            ("Record : " + str(self.meilleur_score[3]) + "s (" + self.meilleur_joueur[3] + ")"), 1, (255, 255, 255))
+        record_level4_rect = record_level4_display.get_rect(
+            center=(self.level4.rect.x + int(205 * pourcentage_x), self.level4.rect.y + int(252 * pourcentage_y)))
+        screen.blit(record_level4_display, record_level4_rect)
+
+        screen.blit(cadre, (self.level5.rect.x - int(10 * pourcentage_x), self.level5.rect.y - int(10 * pourcentage_y)))
+        screen.blit(self.level5.image, (self.level5.rect.x + int(55 * pourcentage_x), self.level5.rect.y + int(40 * pourcentage_y)))
+        record_level5_display = joueur_font.render(
+            ("Record : " + str(self.meilleur_score[4]) + "s (" + self.meilleur_joueur[4] + ")"), 1, (255, 255, 255))
+        record_level5_rect = record_level5_display.get_rect(
+            center=(self.level5.rect.x + int(205 * pourcentage_x), self.level5.rect.y + int(252 * pourcentage_y)))
+        screen.blit(record_level5_display, record_level5_rect)
 
         screen.blit(self.survie_button.image, (self.survie_button.rect.x, self.survie_button.rect.y))
 
@@ -222,9 +252,6 @@ class Game:
         self.exit_button.rect.y = (height - 100) - (50 * pourcentage_y)
 
         screen.blit(self.exit_button.image, (self.exit_button.rect.x, self.exit_button.rect.y))
-
-        # Appliquer l'ensemble des images de légumes
-        self.all_cadres.draw(screen)
 
         pygame.display.flip()
 
@@ -297,7 +324,7 @@ class Game:
     def game_load_level(self, mouse_down):
 
         # Choix de l'arrière-plan du level
-        background = pygame.image.load('background/Level_background/' + str(self.level_background[self.level_number - 1]))
+        background = pygame.image.load('assets/Level_background/' + str(self.level_background[self.level_number - 1]))
 
         # Applique l'arrière-plan en grand écran
         stretchedbg = pygame.transform.smoothscale(background, (width, height))
@@ -332,12 +359,19 @@ class Game:
         screen.blit(timer_display, timer_rect)
 
         # Caractéristiques de l'affichage du score
-        score_display = myfont.render(str(self.player_score), 1, (255, 255, 255))
+        score_display = myfont.render("Score : " + str(self.player_score), 1, (255, 255, 255))
+
+        score_rect = score_display.get_rect(center=(width / 2, 90 * pourcentage_y))
 
         # Applique le score à l'écran
-        screen.blit(score_display, (0, 70 * pourcentage_y))
+        screen.blit(score_display, score_rect)
 
         if self.level_number == 6:
+
+            record_survie_display = joueur_font.render(
+                ("Record : " + str(self.meilleur_score[5]) + "points (" + self.meilleur_joueur[5] + ")"), 1, (255, 255, 255))
+            screen.blit(record_survie_display, (0, height-30))
+
             if self.player_score > self.meilleur_score[5]:
 
                 self.meilleur_score[5] = self.player_score
@@ -366,13 +400,10 @@ class Game:
     def end(self):
 
         # Choix de l'arrière-plan du level
-        background = pygame.image.load('background/Level_background/' + str(self.level_background[self.level_number - 1]))
+        background = pygame.image.load('assets/Level_background/' + str(self.level_background[self.level_number - 1]))
 
         # Applique l'arrière-plan en grand écran
         stretchedbg = pygame.transform.smoothscale(background, (width, height))
-
-        # Régler le nombre d'images par seconde du jeu
-        clock.tick(fps)
 
         # Appliquer l'arrière-plan de notre jeu
         screen.blit(stretchedbg, (0, 0))  # Pour repositionner le fond d'écran changer les nombres
@@ -475,7 +506,6 @@ class Game:
             timer += str(secondes_final)
 
         return timer
-
 
     def lunch_legume(self):
 
