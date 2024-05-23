@@ -12,6 +12,7 @@ from legume import Legume
 from button import Resume_button, Quit_Button, Option_Button, Exit_Button, Start_Button, Survie_Button
 from bomb import Bomb
 from level_image import Level1, Level2, Level3, Level4, Level5
+from sounds import SoundManager
 
 
 fps = 30
@@ -33,6 +34,9 @@ noms_level_background = os.listdir("assets/Level_background")
 class Game:
 
     def __init__(self):
+
+        # générer le son
+        self.sound_manager = SoundManager()
 
         # Représente le nom du joueur
         self.joueur = ""
