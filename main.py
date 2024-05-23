@@ -140,7 +140,6 @@ while running:
                     # Change la valeur de la variable pour détecter si un bouton de la souris est préssé
                     mouse_down = 1
 
-                    game.sound_manager.play("click")
 
             # Si le bouton de la souris est relevé
             elif event.type == pygame.MOUSEBUTTONUP:
